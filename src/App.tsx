@@ -1,35 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import { cn } from "./utils";
+
+const beltColors = [
+  "bg-white",
+  "bg-yellow-300",
+  "bg-green-400",
+  "bg-blue-400",
+  "bg-red-400",
+  "bg-black",
+];
+
+const Belt = ({
+  color,
+  stripeColor,
+}: {
+  color: string;
+  stripeColor?: string;
+}) => {
+  return (
+    <div
+      className={cn(
+        color,
+        "even:self-end even:rounded-s-sm even:translate-x-[2%]",
+        "odd:self-start odd:rounded-r-sm odd:translate-x-[-2%]",
+        "hover:scale-105 transition-all duration-300",
+        "inset-shadow-sm inset-shadow-white/50 h-1/16 w-[90%] inline-flex items-center justify-center relative"
+      )}
+    >
+      {stripeColor && (
+        <div className={`${stripeColor} absolute h-[40%] w-full`} />
+      )}
+    </div>
+  );
+};
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="flex flex-col gap-8 h-screen w-screen bg-black">
+        <Belt color={beltColors[0]} />
+        <Belt color={beltColors[0]} stripeColor={beltColors[1]} />
+        <Belt color={beltColors[1]} />
+        <Belt color={beltColors[1]} stripeColor={beltColors[2]} />
+        <Belt color={beltColors[2]} />
+        <Belt color={beltColors[2]} stripeColor={beltColors[3]} />
+        <Belt color={beltColors[3]} />
+        <Belt color={beltColors[3]} stripeColor={beltColors[4]} />
+        <Belt color={beltColors[4]} />
+        <Belt color={beltColors[4]} stripeColor={beltColors[5]} />
+        <Belt color={beltColors[5]} />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
