@@ -20,61 +20,64 @@ export const itfFundamentals: ItfPattern[] = [
   },
 ];
 
-export const itfPatterns: ItfPattern[] = [
+export const itfColouredBeltPatterns: ItfPattern[] = [
   {
     name: "Chon-Ji",
     movements: 19,
     meaning: "Heaven and Earth",
-    rank: "9th Gup (White Belt)",
+    rank: "9th Gup (Yellow Stripe)",
   },
   {
     name: "Dan-Gun",
     movements: 21,
     meaning: "Founder of Korea",
-    rank: "8th Gup (Yellow Stripe)",
+    rank: "8th Gup (Yellow Belt)",
   },
   {
     name: "Do-San",
     movements: 24,
     meaning: "Patriot Ahn Chang-Ho",
-    rank: "7th Gup (Yellow Belt)",
+    rank: "7th Gup (Green Stripe)",
   },
   {
     name: "Won-Hyo",
     movements: 28,
     meaning: "Monk who introduced Buddhism to Silla",
-    rank: "6th Gup (Green Stripe)",
+    rank: "6th Gup (Green Belt)",
   },
   {
     name: "Yul-Gok",
     movements: 38,
     meaning: "Philosopher Yi I (Yul-Gok)",
-    rank: "5th Gup (Green Belt)",
+    rank: "5th Gup (Blue Stripe)",
   },
   {
     name: "Joong-Gun",
     movements: 32,
     meaning: "Patriot An Joong-Gun",
-    rank: "4th Gup (Blue Stripe)",
+    rank: "4th Gup (Blue Belt)",
   },
   {
     name: "Toi-Gye",
     movements: 37,
     meaning: "Scholar Yi Hwang (Toi-Gye)",
-    rank: "3rd Gup (Blue Belt)",
+    rank: "3rd Gup (Red Stripe)",
   },
   {
     name: "Hwa-Rang",
     movements: 29,
     meaning: "Youth group of the Silla Dynasty",
-    rank: "2nd Gup (Red Stripe)",
+    rank: "2nd Gup (Red Belt)",
   },
   {
     name: "Choong-Moo",
     movements: 30,
     meaning: "Admiral Yi Sun-Sin",
-    rank: "1st Gup (Red Belt)",
+    rank: "1st Gup (Black Stripe)",
   },
+];
+
+export const itfBlackBeltPatterns: ItfPattern[] = [
   {
     name: "Kwang-Gae",
     movements: 39,
