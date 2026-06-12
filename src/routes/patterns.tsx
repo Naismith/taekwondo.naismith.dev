@@ -1,14 +1,14 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 
-import { MiniBelt, rankToBeltStyle } from "../components/belt";
+import { MiniBelt, rankToBeltStyle } from "~/components/belt";
 import {
   itfBlackBeltPatterns,
   itfColouredBeltPatterns,
   itfFundamentals,
   patternToId,
   type ItfPattern,
-} from "../data/itf-patterns";
-import { cn } from "../utils";
+} from "~/data/itf-patterns";
+import { cn } from "~/utils";
 
 export const Route = createFileRoute("/patterns")({
   component: Patterns,

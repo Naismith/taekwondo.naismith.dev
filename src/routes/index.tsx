@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { Belt, colouredBeltLadder } from "../components/belt";
+import { Belt, colouredBeltLadder } from "~/components/belt";
 
 export const Route = createFileRoute("/")({
   component: Home,
