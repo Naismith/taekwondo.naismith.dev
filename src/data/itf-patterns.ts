@@ -5,6 +5,10 @@ export type ItfPattern = {
   rank: string;
 };
 
+export function patternToId(name: string): string {
+  return name.toLowerCase().replace(/\s+/g, "-");
+}
+
 export const itfFundamentals: ItfPattern[] = [
   {
     name: "Saju Jirugi",
@@ -169,3 +173,13 @@ export const itfBlackBeltPatterns: ItfPattern[] = [
     rank: "6th Degree Black Belt",
   },
 ];
+
+export const allItfPatterns: ItfPattern[] = [
+  ...itfFundamentals,
+  ...itfColouredBeltPatterns,
+  ...itfBlackBeltPatterns,
+];
+
+export function getPatternById(id: string): ItfPattern | undefined {
+  return allItfPatterns.find((pattern) => patternToId(pattern.name) === id);
+}

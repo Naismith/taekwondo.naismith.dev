@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PatternsRouteImport } from './routes/patterns'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PatternIdRouteImport } from './routes/pattern.$id'
 
 const PatternsRoute = PatternsRouteImport.update({
   id: '/patterns',
@@ -28,35 +29,44 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PatternIdRoute = PatternIdRouteImport.update({
+  id: '/pattern/$id',
+  path: '/pattern/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/patterns': typeof PatternsRoute
+  '/pattern/$id': typeof PatternIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/patterns': typeof PatternsRoute
+  '/pattern/$id': typeof PatternIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/patterns': typeof PatternsRoute
+  '/pattern/$id': typeof PatternIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/patterns'
+  fullPaths: '/' | '/about' | '/patterns' | '/pattern/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/patterns'
-  id: '__root__' | '/' | '/about' | '/patterns'
+  to: '/' | '/about' | '/patterns' | '/pattern/$id'
+  id: '__root__' | '/' | '/about' | '/patterns' | '/pattern/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   PatternsRoute: typeof PatternsRoute
+  PatternIdRoute: typeof PatternIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pattern/$id': {
+      id: '/pattern/$id'
+      path: '/pattern/$id'
+      fullPath: '/pattern/$id'
+      preLoaderRoute: typeof PatternIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   PatternsRoute: PatternsRoute,
+  PatternIdRoute: PatternIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
