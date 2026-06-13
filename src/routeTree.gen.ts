@@ -9,11 +9,21 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SparringRouteImport } from './routes/sparring'
 import { Route as PatternsRouteImport } from './routes/patterns'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SparringIndexRouteImport } from './routes/sparring.index'
+import { Route as SparringTypeRouteImport } from './routes/sparring.$type'
 import { Route as PatternIdRouteImport } from './routes/pattern.$id'
+import { Route as SparringTypeIndexRouteImport } from './routes/sparring.$type.index'
+import { Route as SparringTypeNumberRouteImport } from './routes/sparring.$type.$number'
 
+const SparringRoute = SparringRouteImport.update({
+  id: '/sparring',
+  path: '/sparring',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PatternsRoute = PatternsRouteImport.update({
   id: '/patterns',
   path: '/patterns',
@@ -29,48 +39,115 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SparringIndexRoute = SparringIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SparringRoute,
+} as any)
+const SparringTypeRoute = SparringTypeRouteImport.update({
+  id: '/$type',
+  path: '/$type',
+  getParentRoute: () => SparringRoute,
+} as any)
 const PatternIdRoute = PatternIdRouteImport.update({
   id: '/pattern/$id',
   path: '/pattern/$id',
   getParentRoute: () => rootRouteImport,
+} as any)
+const SparringTypeIndexRoute = SparringTypeIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SparringTypeRoute,
+} as any)
+const SparringTypeNumberRoute = SparringTypeNumberRouteImport.update({
+  id: '/$number',
+  path: '/$number',
+  getParentRoute: () => SparringTypeRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/patterns': typeof PatternsRoute
+  '/sparring': typeof SparringRouteWithChildren
   '/pattern/$id': typeof PatternIdRoute
+  '/sparring/$type': typeof SparringTypeRouteWithChildren
+  '/sparring/': typeof SparringIndexRoute
+  '/sparring/$type/$number': typeof SparringTypeNumberRoute
+  '/sparring/$type/': typeof SparringTypeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/patterns': typeof PatternsRoute
   '/pattern/$id': typeof PatternIdRoute
+  '/sparring': typeof SparringIndexRoute
+  '/sparring/$type/$number': typeof SparringTypeNumberRoute
+  '/sparring/$type': typeof SparringTypeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/patterns': typeof PatternsRoute
+  '/sparring': typeof SparringRouteWithChildren
   '/pattern/$id': typeof PatternIdRoute
+  '/sparring/$type': typeof SparringTypeRouteWithChildren
+  '/sparring/': typeof SparringIndexRoute
+  '/sparring/$type/$number': typeof SparringTypeNumberRoute
+  '/sparring/$type/': typeof SparringTypeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/patterns' | '/pattern/$id'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/patterns'
+    | '/sparring'
+    | '/pattern/$id'
+    | '/sparring/$type'
+    | '/sparring/'
+    | '/sparring/$type/$number'
+    | '/sparring/$type/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/patterns' | '/pattern/$id'
-  id: '__root__' | '/' | '/about' | '/patterns' | '/pattern/$id'
+  to:
+    | '/'
+    | '/about'
+    | '/patterns'
+    | '/pattern/$id'
+    | '/sparring'
+    | '/sparring/$type/$number'
+    | '/sparring/$type'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/patterns'
+    | '/sparring'
+    | '/pattern/$id'
+    | '/sparring/$type'
+    | '/sparring/'
+    | '/sparring/$type/$number'
+    | '/sparring/$type/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   PatternsRoute: typeof PatternsRoute
+  SparringRoute: typeof SparringRouteWithChildren
   PatternIdRoute: typeof PatternIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sparring': {
+      id: '/sparring'
+      path: '/sparring'
+      fullPath: '/sparring'
+      preLoaderRoute: typeof SparringRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/patterns': {
       id: '/patterns'
       path: '/patterns'
@@ -92,6 +169,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sparring/': {
+      id: '/sparring/'
+      path: '/'
+      fullPath: '/sparring/'
+      preLoaderRoute: typeof SparringIndexRouteImport
+      parentRoute: typeof SparringRoute
+    }
+    '/sparring/$type': {
+      id: '/sparring/$type'
+      path: '/$type'
+      fullPath: '/sparring/$type'
+      preLoaderRoute: typeof SparringTypeRouteImport
+      parentRoute: typeof SparringRoute
+    }
     '/pattern/$id': {
       id: '/pattern/$id'
       path: '/pattern/$id'
@@ -99,13 +190,56 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PatternIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sparring/$type/': {
+      id: '/sparring/$type/'
+      path: '/'
+      fullPath: '/sparring/$type/'
+      preLoaderRoute: typeof SparringTypeIndexRouteImport
+      parentRoute: typeof SparringTypeRoute
+    }
+    '/sparring/$type/$number': {
+      id: '/sparring/$type/$number'
+      path: '/$number'
+      fullPath: '/sparring/$type/$number'
+      preLoaderRoute: typeof SparringTypeNumberRouteImport
+      parentRoute: typeof SparringTypeRoute
+    }
   }
 }
+
+interface SparringTypeRouteChildren {
+  SparringTypeNumberRoute: typeof SparringTypeNumberRoute
+  SparringTypeIndexRoute: typeof SparringTypeIndexRoute
+}
+
+const SparringTypeRouteChildren: SparringTypeRouteChildren = {
+  SparringTypeNumberRoute: SparringTypeNumberRoute,
+  SparringTypeIndexRoute: SparringTypeIndexRoute,
+}
+
+const SparringTypeRouteWithChildren = SparringTypeRoute._addFileChildren(
+  SparringTypeRouteChildren,
+)
+
+interface SparringRouteChildren {
+  SparringTypeRoute: typeof SparringTypeRouteWithChildren
+  SparringIndexRoute: typeof SparringIndexRoute
+}
+
+const SparringRouteChildren: SparringRouteChildren = {
+  SparringTypeRoute: SparringTypeRouteWithChildren,
+  SparringIndexRoute: SparringIndexRoute,
+}
+
+const SparringRouteWithChildren = SparringRoute._addFileChildren(
+  SparringRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   PatternsRoute: PatternsRoute,
+  SparringRoute: SparringRouteWithChildren,
   PatternIdRoute: PatternIdRoute,
 }
 export const routeTree = rootRouteImport

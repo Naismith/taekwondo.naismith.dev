@@ -21,6 +21,12 @@ function RootLayout() {
           Patterns
         </Link>
         <Link
+          to="/sparring"
+          className="text-white hover:text-yellow-300 transition-colors [&.active]:text-yellow-300"
+        >
+          Sparring
+        </Link>
+        <Link
           to="/about"
           className="text-white hover:text-yellow-300 transition-colors [&.active]:text-yellow-300"
         >
