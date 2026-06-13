@@ -70,8 +70,7 @@ src/
     ├── sparring.$type.tsx
     ├── sparring.$type.index.tsx
     ├── sparring.$type.$number.tsx
-    ├── theory.tsx           # /theory
-    └── about.tsx            # /about — placeholder
+    └── theory.tsx           # /theory
 ```
 
 ## Routes
@@ -85,7 +84,6 @@ src/
 | `/sparring/:type`         | `routes/sparring.$type.index.tsx`   | Sequence list for a sparring type            |
 | `/sparring/:type/:number` | `routes/sparring.$type.$number.tsx` | Single sparring sequence                     |
 | `/theory`                 | `routes/theory.tsx`                 | Theory reference (tenets, definitions, oath) |
-| `/about`                  | `routes/about.tsx`                  | Placeholder about page                       |
 
 Pattern IDs are slugs derived from names (`Chon-Ji` → `chon-ji`) via `patternToId()` in `~/data/itf-patterns`. Sparring `:type` values match `SparringType` in `~/data/sparring.ts` (e.g. `3-step`, `2-step`).
 

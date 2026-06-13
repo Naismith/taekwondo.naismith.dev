@@ -25,6 +25,10 @@
 }
 
 @layer base {
+  html {
+    scroll-padding-top: 3.5rem; /* fixed nav h-14 */
+  }
+
   body {
     @apply bg-black font-sans text-white antialiased;
   }

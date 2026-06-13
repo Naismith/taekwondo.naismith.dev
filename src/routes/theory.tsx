@@ -11,32 +11,57 @@ import {
   theoryOfPower,
   type TheorySection,
 } from "~/data/theory";
+import { cn } from "~/utils";
 
 export const Route = createFileRoute("/theory")({
   component: Theory,
 });
 
+const sectionNav = [
+  { id: "meaning", label: "Meaning" },
+  { id: "tenets", label: "Tenets" },
+  { id: "oath", label: "Oath" },
+  { id: "colours", label: "Belts" },
+  { id: "composition", label: "Composition" },
+  { id: "theory-of-power", label: "Power" },
+  { id: "sine-wave", label: "Sine Wave" },
+] as const;
+
+const highlightCardClass =
+  "rounded-sm bg-primary/5 px-3 py-2.5 text-sm leading-relaxed text-white/70 ring-1 ring-primary/20";
+
+function SectionHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <h2 className="mb-3 text-sm font-medium uppercase tracking-wide text-white/80">
+      {children}
+    </h2>
+  );
+}
+
 function TheoryList({ section }: { section: TheorySection }) {
   return (
-    <section id={section.id} className="mb-8 last:mb-0">
-      <h2 className="mb-3 text-sm font-medium uppercase tracking-wide text-white/80">
-        {section.title}
-      </h2>
-      <ol className="flex flex-col gap-2">
-        {section.items.map((item) => (
+    <section id={section.id}>
+      <SectionHeading>{section.title}</SectionHeading>
+      <ol className="flex flex-col gap-1.5">
+        {section.items.map((item, index) => (
           <li
             key={item.label}
-            className="rounded-sm bg-white/5 px-4 py-3 text-sm leading-relaxed"
+            className="flex gap-3 rounded-sm bg-white/5 px-3 py-2.5 text-sm leading-relaxed transition-colors hover:bg-white/10"
           >
-            <p className="font-medium text-white">
-              {item.label}
-              {item.korean && (
-                <span className="ml-2 font-normal text-primary/70">
-                  {item.korean}
-                </span>
-              )}
-            </p>
-            <p className="mt-1 text-white/70">{item.detail}</p>
+            <span className="w-5 shrink-0 text-right tabular-nums text-primary/50">
+              {index + 1}
+            </span>
+            <div className="min-w-0">
+              <p className="font-medium text-white">
+                {item.label}
+                {item.korean && (
+                  <span className="ml-2 font-normal text-primary/70">
+                    {item.korean}
+                  </span>
+                )}
+              </p>
+              <p className="mt-0.5 text-white/70">{item.detail}</p>
+            </div>
           </li>
         ))}
       </ol>
@@ -47,93 +72,107 @@ function TheoryList({ section }: { section: TheorySection }) {
 function Theory() {
   return (
     <div className="page-shell">
-      <div className="content-column">
-        <h1 className="mb-1 text-2xl font-semibold tracking-tight text-white">
-          Taekwon-Do Theory
-        </h1>
-        <p className="mb-8 text-sm text-white/50">
-          Core ITF concepts — meaning, tenets, oath, belt symbolism, and
-          principles of power.
-        </p>
+      <div className="content-column relative">
+        <div aria-hidden className="ambient-glow" />
+        <div aria-hidden className="accent-glow" />
 
-        <section id="meaning" className="mb-8">
-          <h2 className="mb-3 text-sm font-medium uppercase tracking-wide text-white/80">
-            {taekwondoMeaning.title}
-          </h2>
-          <p className="mb-4 rounded-sm bg-primary/5 px-3 py-2.5 text-sm leading-relaxed text-white/70 ring-1 ring-primary/20">
-            {taekwondoMeaning.description}
+        <header className="relative mb-8">
+          <h1 className="text-2xl font-semibold tracking-tight text-white">
+            Taekwon-Do Theory
+          </h1>
+          <p className="mt-1 text-sm text-white/50">
+            Core ITF concepts — meaning, tenets, oath, belt symbolism, and
+            principles of power.
           </p>
-          <dl className="flex flex-col gap-2">
-            {taekwondoMeaning.parts.map((part) => (
-              <div
-                key={part.korean}
-                className="flex gap-3 rounded-sm bg-white/5 px-4 py-3 text-sm"
-              >
-                <dt className="w-10 shrink-0 font-medium text-primary">
-                  {part.korean}
-                </dt>
-                <dd className="text-white/70">{part.meaning}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
+        </header>
 
-        <TheoryList section={tenets} />
+        <nav
+          aria-label="Theory sections"
+          className="relative mb-8 flex flex-wrap gap-2"
+        >
+          {sectionNav.map(({ id, label }) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              className="rounded-full px-3 py-1 text-xs text-white/50 ring-1 ring-white/10 transition-colors hover:text-primary hover:ring-primary/20"
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
 
-        <section id="oath" className="mb-8">
-          <h2 className="mb-3 text-sm font-medium uppercase tracking-wide text-white/80">
-            {studentOath.title}
-          </h2>
-          <ol className="flex flex-col gap-1.5">
-            {studentOath.lines.map((line, index) => (
-              <li
-                key={index}
-                className="flex gap-3 rounded-sm bg-primary/5 px-3 py-2.5 text-sm leading-relaxed ring-1 ring-primary/20"
-              >
-                <span className="w-5 shrink-0 text-right tabular-nums text-primary/50">
-                  {index + 1}
-                </span>
-                <span className="text-white/70">{line}</span>
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        <section id="colours" className="mb-8">
-          <h2 className="mb-3 text-sm font-medium uppercase tracking-wide text-white/80">
-            Belt Colour Meanings
-          </h2>
-          <ol className="flex flex-col gap-2">
-            {beltColours.map((belt) => (
-              <li
-                key={belt.rank}
-                className="flex items-start gap-3 rounded-sm bg-white/5 px-4 py-3 text-sm leading-relaxed"
-              >
-                <MiniBelt
-                  {...rankToBeltStyle(belt.rank)}
-                  className="mt-1 h-2.5 w-14 shrink-0"
-                />
-                <div className="min-w-0">
-                  <p className="font-medium text-white">{belt.rank}</p>
-                  <p className="mt-0.5 text-xs text-white/40">{belt.colour}</p>
-                  <p className="mt-1 text-white/70">{belt.meaning}</p>
+        <div className="relative flex flex-col gap-8">
+          <section id="meaning">
+            <SectionHeading>{taekwondoMeaning.title}</SectionHeading>
+            <p className={cn(highlightCardClass, "mb-4")}>
+              {taekwondoMeaning.description}
+            </p>
+            <dl className="flex flex-col gap-2">
+              {taekwondoMeaning.parts.map((part) => (
+                <div
+                  key={part.korean}
+                  className="flex gap-3 rounded-sm bg-white/5 px-4 py-3 text-sm transition-colors hover:bg-white/10"
+                >
+                  <dt className="w-10 shrink-0 font-medium text-primary">
+                    {part.korean}
+                  </dt>
+                  <dd className="text-white/70">{part.meaning}</dd>
                 </div>
-              </li>
-            ))}
-          </ol>
-        </section>
+              ))}
+            </dl>
+          </section>
 
-        <TheoryList section={compositionOfTaekwondo} />
-        <TheoryList section={theoryOfPower} />
+          <TheoryList section={tenets} />
 
-        <section id="sine-wave" className="mb-8 last:mb-0">
-          <h2 className="mb-3 text-sm font-medium uppercase tracking-wide text-white/80">
-            {sineWavePrinciple.title}
-          </h2>
-          <p className="rounded-sm bg-white/5 px-4 py-3 text-sm leading-relaxed text-white/70">
-            {sineWavePrinciple.description}
-          </p>
-        </section>
+          <section id="oath">
+            <SectionHeading>{studentOath.title}</SectionHeading>
+            <ol className="flex flex-col gap-1.5">
+              {studentOath.lines.map((line, index) => (
+                <li
+                  key={index}
+                  className={cn("flex gap-3", highlightCardClass)}
+                >
+                  <span className="w-5 shrink-0 text-right tabular-nums text-primary/50">
+                    {index + 1}
+                  </span>
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          <section id="colours">
+            <SectionHeading>Belt Colour Meanings</SectionHeading>
+            <ol className="flex flex-col gap-2">
+              {beltColours.map((belt) => (
+                <li
+                  key={belt.rank}
+                  className="flex items-start gap-3 rounded-sm bg-white/5 px-4 py-3 text-sm leading-relaxed transition-colors hover:bg-white/10"
+                >
+                  <MiniBelt
+                    {...rankToBeltStyle(belt.rank)}
+                    className="mt-1 h-2.5 w-14 shrink-0"
+                  />
+                  <div className="min-w-0 flex-1">
+                    <p className="font-medium text-white">{belt.rank}</p>
+                    <p className="text-sm text-white/50">{belt.colour}</p>
+                    <p className="mt-1 text-white/70">{belt.meaning}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          <TheoryList section={compositionOfTaekwondo} />
+          <TheoryList section={theoryOfPower} />
+
+          <section id="sine-wave">
+            <SectionHeading>{sineWavePrinciple.title}</SectionHeading>
+            <p className={highlightCardClass}>
+              {sineWavePrinciple.description}
+            </p>
+          </section>
+        </div>
       </div>
     </div>
   );

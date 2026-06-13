@@ -10,16 +10,21 @@ export const Route = createFileRoute("/sparring/")({
 function Sparring() {
   return (
     <div className="page-shell">
-      <div className="content-column">
-        <h1 className="mb-1 text-2xl font-semibold tracking-tight text-white">
-          Pre-arranged Sparring
-        </h1>
-        <p className="mb-6 text-sm text-white/50">
-          Yaksok Matsogi — fixed attack and defence sequences used to develop
-          distance, timing, blocking, and counter-attacking.
-        </p>
+      <div className="content-column relative">
+        <div aria-hidden className="ambient-glow" />
+        <div aria-hidden className="accent-glow" />
 
-        <ol className="flex flex-col gap-2">
+        <header className="relative mb-8">
+          <h1 className="text-2xl font-semibold tracking-tight text-white">
+            Pre-arranged Sparring
+          </h1>
+          <p className="mt-1 text-sm text-white/50">
+            Yaksok Matsogi — fixed attack and defence sequences used to develop
+            distance, timing, blocking, and counter-attacking.
+          </p>
+        </header>
+
+        <ol className="relative flex flex-col gap-2">
           {sparringTypes.map((sparring) => (
             <li key={sparring.id}>
               <Link
@@ -30,19 +35,19 @@ function Sparring() {
                   "transition-colors hover:bg-white/10"
                 )}
               >
-                <span className="text-primary/60 text-sm tabular-nums w-6 shrink-0 text-center">
+                <span className="w-6 shrink-0 text-center text-sm tabular-nums text-primary/60">
                   {sparring.sequences.length}
                 </span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-white font-medium">{sparring.name}</p>
-                  <p className="text-white/50 text-sm truncate">
+                <div className="min-w-0 flex-1">
+                  <p className="font-medium text-white">{sparring.name}</p>
+                  <p className="truncate text-sm text-white/50">
                     {sparring.koreanName}
                   </p>
                 </div>
-                <div className="text-right shrink-0">
-                  <p className="text-white/40 text-xs">{sparring.rank}</p>
+                <div className="shrink-0 text-right">
+                  <p className="text-xs text-white/40">{sparring.rank}</p>
                 </div>
-                <span aria-hidden className="text-white/30 text-xs shrink-0">
+                <span aria-hidden className="shrink-0 text-xs text-white/30">
                   →
                 </span>
               </Link>

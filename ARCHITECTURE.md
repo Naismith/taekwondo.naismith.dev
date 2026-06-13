@@ -76,8 +76,7 @@ taekwondo.naismith.dev/
 │       ├── sparring.$type.tsx
 │       ├── sparring.$type.index.tsx
 │       ├── sparring.$type.$number.tsx
-│       ├── theory.tsx      # Theory reference (/theory)
-│       └── about.tsx       # About page (/about)
+│       └── theory.tsx      # Theory reference (/theory)
 ```
 
 Routes are defined as files under `src/routes/`. TanStack Router's Vite plugin scans this directory and generates `routeTree.gen.ts` at build/dev time.
@@ -117,7 +116,6 @@ Routing uses **TanStack Router** with **file-based route definitions** and **aut
 | `/sparring/:type`         | `src/routes/sparring.$type.index.tsx`   | Sequence list for a sparring type            |
 | `/sparring/:type/:number` | `src/routes/sparring.$type.$number.tsx` | Single sparring sequence detail              |
 | `/theory`                 | `src/routes/theory.tsx`                 | Theory reference (tenets, definitions, oath) |
-| `/about`                  | `src/routes/about.tsx`                  | About page (placeholder)                     |
 
 All routes are children of the root route defined in `src/routes/__root.tsx`.
 
@@ -136,7 +134,7 @@ Leaf routes (`sparring.index.tsx`, `sparring.$type.index.tsx`, `sparring.$type.$
 
 `__root.tsx` defines the persistent shell:
 
-- A fixed top navigation bar with `<Link>` components to `/`, `/patterns`, `/sparring`, `/theory`, and `/about`
+- A fixed top navigation bar with `<Link>` components to `/`, `/patterns`, `/sparring`, and `/theory`
 - An `<Outlet />` where child route components render
 - Active link styling via TanStack Router's `.active` class
 
@@ -167,10 +165,6 @@ Three-level navigation over static sparring definitions in `~/data/sparring.ts`:
 ### Theory (`/theory`)
 
 Renders static theory content from `~/data/theory.ts` — tenets, student oath, and terminology definitions.
-
-### About (`/about`)
-
-A minimal placeholder page. No shared layout beyond the root nav.
 
 ### Shared components
 
