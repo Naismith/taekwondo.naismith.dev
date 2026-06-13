@@ -6,20 +6,20 @@ Guide for AI agents working on **taekwondo.naismith.dev** — a static React SPA
 
 - Client-only SPA: no backend, no API, no auth, no global state library
 - Static data in `src/data/` (pattern metadata and step-by-step movement text)
-- Dark UI (`bg-black`, yellow accents) with Tailwind CSS v4
+- Dark UI with Tailwind CSS v4 — colors, typography, layout, and component patterns are defined in [DESIGN.md](./DESIGN.md)
 - Deployed as static files from `dist/` (SPA fallback required on the host)
 
-For deeper architectural detail, see [ARCHITECTURE.md](./ARCHITECTURE.md).
+For deeper architectural detail, see [ARCHITECTURE.md](./ARCHITECTURE.md). For all visual and styling decisions, see [DESIGN.md](./DESIGN.md).
 
 ## Tech stack
 
-| Layer   | Technology                                       |
-| ------- | ------------------------------------------------ |
-| UI      | React 19, TypeScript 5.9                         |
-| Build   | Vite 8                                           |
-| Routing | TanStack Router (file-based, code-split)         |
-| Styling | Tailwind CSS v4, `cn()` from `~/utils`           |
-| 3D      | Three.js, React Three Fiber, `@react-three/drei` |
+| Layer   | Technology                                                            |
+| ------- | --------------------------------------------------------------------- |
+| UI      | React 19, TypeScript 5.9                                              |
+| Build   | Vite 8                                                                |
+| Routing | TanStack Router (file-based, code-split)                              |
+| Styling | Tailwind CSS v4, `cn()` from `~/utils` — see [DESIGN.md](./DESIGN.md) |
+| 3D      | Three.js, React Three Fiber, `@react-three/drei`                      |
 
 ## Commands
 
@@ -36,7 +36,7 @@ npm run preview  # serve dist/
 src/
 ├── main.tsx                 # entry: RouterProvider + routeTree
 ├── routeTree.gen.ts         # auto-generated — do not edit
-├── index.css                # Tailwind import + dark variant
+├── index.css                # Tailwind @theme tokens (from DESIGN.md) + utilities
 ├── utils.ts                 # cn() helper
 ├── utils/pattern-path.ts    # parse step text → 3D positions
 ├── components/
@@ -68,7 +68,7 @@ Pattern IDs are slugs derived from names (`Chon-Ji` → `chon-ji`) via `patternT
 
 - **Imports:** use the `~` alias for `src/` (e.g. `import { cn } from "~/utils"`), not relative `../` paths
 - **New routes:** add a file under `src/routes/`; TanStack Router regenerates `routeTree.gen.ts`
-- **Styling:** Tailwind utilities in JSX; use `cn()` for conditional/merged classes
+- **Styling:** follow [DESIGN.md](./DESIGN.md) for colors, typography, spacing, and component patterns; implement with Tailwind utilities in JSX and `@theme` tokens in `index.css`; use `cn()` for conditional/merged classes
 - **Components:** shared UI lives in `src/components/`
 - **Data:** static TS modules in `src/data/` — no fetch layer
 - **State:** local React state only (`useState`, `useMemo`); no Redux/Zustand/Query
@@ -86,6 +86,7 @@ Pattern IDs are slugs derived from names (`Chon-Ji` → `chon-ji`) via `patternT
 - Add step text → `src/data/pattern-steps.ts` (keyed by pattern name)
 - New shared UI → `src/components/`
 - New pages → `src/routes/` (file name = URL shape, e.g. `pattern.$id.tsx`)
+- Visual or styling changes → follow [DESIGN.md](./DESIGN.md); extend `@theme` in `index.css` when adding tokens
 - Architectural changes → update [ARCHITECTURE.md](./ARCHITECTURE.md) using the `.cursor/skills/update-architecture-doc` skill
 
 ## What to avoid
