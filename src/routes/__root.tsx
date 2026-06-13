@@ -32,6 +32,12 @@ function RootLayout() {
         >
           Theory
         </Link>
+        <Link
+          to="/glossary"
+          className="text-sm text-white transition-colors hover:text-primary [&.active]:text-primary"
+        >
+          Glossary
+        </Link>
       </nav>
       <Outlet />
     </>

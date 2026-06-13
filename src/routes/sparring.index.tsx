@@ -2,6 +2,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 
 import {
   getSequenceSummary,
+  sparringTypeLabels,
   sparringTypes,
   type SparringDefinition,
 } from "~/data/sparring";
@@ -13,7 +14,7 @@ export const Route = createFileRoute("/sparring/")({
 
 const sectionNav = sparringTypes.map((sparring) => ({
   id: sparring.id,
-  label: sparring.id === "3-step" ? "3-Step" : "2-Step",
+  label: sparringTypeLabels[sparring.id],
 }));
 
 function SectionHeading({ children }: { children: React.ReactNode }) {

@@ -1,4 +1,4 @@
-export type SparringType = "3-step" | "2-step";
+export type SparringType = "3-step" | "2-step" | "1-step";
 
 export type SparringSequence = {
   number: number;
@@ -18,6 +18,12 @@ export type SparringDefinition = {
   /** Shared attack for every sequence in 3-step sparring. */
   fixedAttack?: string[];
   sequences: SparringSequence[];
+};
+
+export const sparringTypeLabels: Record<SparringType, string> = {
+  "3-step": "3-Step",
+  "2-step": "2-Step",
+  "1-step": "1-Step",
 };
 
 export const sparringTypes: SparringDefinition[] = [
@@ -256,6 +262,88 @@ export const sparringTypes: SparringDefinition[] = [
           "Slide back into left L-stance, outer forearm block",
         ],
         counter: "Jumping left knifehand strike",
+      },
+    ],
+  },
+  {
+    id: "1-step",
+    name: "One Step Sparring",
+    koreanName: "Ilbo Matsogi",
+    description:
+      "The most spontaneous form of pre-arranged sparring. A single attack is agreed upon; the defender blocks and counters with one decisive technique. Emphasis is on timing, distance, and realistic application.",
+    rank: "4th Gup (Blue Belt) and above",
+    attackerStart: "Parallel ready stance",
+    defenderStart: "Parallel ready stance",
+    sequences: [
+      {
+        number: 1,
+        attacks: ["Middle section obverse punch in walking stance"],
+        defences: [
+          "Walking stance, middle inner forearm obverse side block",
+        ],
+        counter: "Middle obverse punch",
+      },
+      {
+        number: 2,
+        attacks: ["Middle section obverse punch in walking stance"],
+        defences: [
+          "L-stance, middle outer forearm inward block",
+        ],
+        counter: "Middle reverse punch",
+      },
+      {
+        number: 3,
+        attacks: ["Middle section obverse punch in walking stance"],
+        defences: ["L-stance, knifehand block to the inside"],
+        counter: "Knifehand strike to the neck",
+      },
+      {
+        number: 4,
+        attacks: ["Middle section obverse punch in walking stance"],
+        defences: ["Walking stance, palm heel block to the inside"],
+        counter: "High section punch",
+      },
+      {
+        number: 5,
+        attacks: ["Middle section obverse punch in walking stance"],
+        defences: ["L-stance, forearm rising block"],
+        counter: "Middle front snap kick followed by obverse punch",
+      },
+      {
+        number: 6,
+        attacks: ["Middle section obverse punch in walking stance"],
+        defences: [
+          "Slide back into L-stance, middle forearm-guarding block",
+        ],
+        counter: "Side elbow strike",
+      },
+      {
+        number: 7,
+        attacks: ["Middle section obverse punch in walking stance"],
+        defences: [
+          "Step back into walking stance, outer forearm wedging block",
+        ],
+        counter: "Twin vertical punch",
+      },
+      {
+        number: 8,
+        attacks: ["Middle section obverse punch in walking stance"],
+        defences: [
+          "Body shift to the outside, L-stance, knifehand block",
+        ],
+        counter: "Middle side piercing kick",
+      },
+      {
+        number: 9,
+        attacks: ["Middle front snap kick"],
+        defences: ["Walking stance, X-fist pressing block"],
+        counter: "Middle obverse punch",
+      },
+      {
+        number: 10,
+        attacks: ["Middle section turning kick"],
+        defences: ["L-stance, knifehand block to the outside"],
+        counter: "Low side piercing kick",
       },
     ],
   },

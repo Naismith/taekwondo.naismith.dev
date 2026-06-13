@@ -2,6 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { MiniBelt, rankToBeltStyle } from "~/components/belt";
 import {
+  techniqueCategories,
+  techniques,
+  type Technique,
+} from "~/data/techniques";
+import {
   beltColours,
   compositionOfTaekwondo,
   sineWavePrinciple,
@@ -25,6 +30,7 @@ const sectionNav = [
   { id: "composition", label: "Composition" },
   { id: "theory-of-power", label: "Power" },
   { id: "sine-wave", label: "Sine Wave" },
+  { id: "techniques", label: "Stances" },
 ] as const;
 
 const highlightCardClass =
@@ -69,6 +75,55 @@ function TheoryList({ section }: { section: TheorySection }) {
   );
 }
 
+function TechniqueCard({ technique }: { technique: Technique }) {
+  return (
+    <li className="rounded-sm bg-white/5 px-4 py-3 text-sm leading-relaxed transition-colors hover:bg-white/10">
+      <p className="font-medium text-white">
+        {technique.english}
+        <span className="ml-2 font-normal text-primary/70">
+          {technique.korean}
+        </span>
+      </p>
+      <p className="mt-1 text-white/70">{technique.definition}</p>
+      {technique.details && (
+        <p className="mt-2 text-xs text-white/50">{technique.details}</p>
+      )}
+    </li>
+  );
+}
+
+function TechniquesSection() {
+  return (
+    <section id="techniques">
+      <SectionHeading>Stances &amp; Ready Stances</SectionHeading>
+      <p className={cn(highlightCardClass, "mb-4")}>
+        The building blocks of every pattern and sparring sequence — foot
+        positions, weight distribution, and typical use.
+      </p>
+
+      <div className="flex flex-col gap-6">
+        {techniqueCategories.map((group) => {
+          const items = techniques.filter(
+            (technique) => technique.category === group.id
+          );
+          return (
+            <div key={group.id}>
+              <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-white/50">
+                {group.label}
+              </h3>
+              <ul className="flex flex-col gap-1.5">
+                {items.map((technique) => (
+                  <TechniqueCard key={technique.korean} technique={technique} />
+                ))}
+              </ul>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 function Theory() {
   return (
     <div className="page-shell">
@@ -81,8 +136,8 @@ function Theory() {
             Taekwon-Do Theory
           </h1>
           <p className="mt-1 text-sm text-white/50">
-            Core ITF concepts — meaning, tenets, oath, belt symbolism, and
-            principles of power.
+            Core ITF concepts — meaning, tenets, oath, belt symbolism,
+            principles of power, and stances.
           </p>
         </header>
 
@@ -172,6 +227,8 @@ function Theory() {
               {sineWavePrinciple.description}
             </p>
           </section>
+
+          <TechniquesSection />
         </div>
       </div>
     </div>
