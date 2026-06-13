@@ -20,7 +20,7 @@ function SparringType() {
       <div className="max-w-2xl mx-auto">
         <Link
           to="/sparring"
-          className="inline-flex items-center gap-1.5 text-white/50 hover:text-yellow-300 text-sm mb-6 transition-colors"
+          className="inline-flex items-center gap-1.5 text-white/50 hover:text-primary text-sm mb-6 transition-colors"
         >
           <span aria-hidden>←</span>
           All sparring
@@ -30,7 +30,7 @@ function SparringType() {
           <h1 className="text-white text-2xl font-semibold mb-1">
             {sparring.name}
           </h1>
-          <p className="text-yellow-300/80 text-sm mb-2">
+          <p className="text-primary/80 text-sm mb-2">
             {sparring.koreanName}
           </p>
           <p className="text-white/60 text-sm">{sparring.description}</p>
@@ -80,7 +80,7 @@ function SparringType() {
                     "transition-colors hover:bg-white/10"
                   )}
                 >
-                  <span className="text-yellow-300/60 text-sm tabular-nums w-6 shrink-0 text-center">
+                  <span className="text-primary/60 text-sm tabular-nums w-6 shrink-0 text-center">
                     {sequence.number}
                   </span>
                   <div className="flex-1 min-w-0">

@@ -39,7 +39,7 @@ function PatternList({
               "transition-colors hover:bg-white/10"
             )}
           >
-            <span className="text-yellow-300/60 text-sm tabular-nums w-6 shrink-0 text-center">
+            <span className="text-primary/60 text-sm tabular-nums w-6 shrink-0 text-center">
               {numbered ? index + 1 : "·"}
             </span>
             <div className="flex-1 min-w-0">

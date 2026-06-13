@@ -25,7 +25,7 @@ function StepList({
             key={index}
             className="flex gap-3 rounded-sm bg-white/5 px-3 py-2.5 text-sm leading-relaxed"
           >
-            <span className="tabular-nums w-5 shrink-0 text-right text-yellow-300/50">
+            <span className="tabular-nums w-5 shrink-0 text-right text-primary/50">
               {index + 1}
             </span>
             <span className="text-white/70">{step}</span>
@@ -58,14 +58,14 @@ function SparringSequenceDetail() {
         <Link
           to="/sparring/$type"
           params={{ type: sparring.id }}
-          className="inline-flex items-center gap-1.5 text-white/50 hover:text-yellow-300 text-sm mb-6 transition-colors"
+          className="inline-flex items-center gap-1.5 text-white/50 hover:text-primary text-sm mb-6 transition-colors"
         >
           <span aria-hidden>←</span>
           {sparring.name}
         </Link>
 
         <header className="mb-8">
-          <p className="text-yellow-300/80 text-sm mb-1">
+          <p className="text-primary/80 text-sm mb-1">
             {sparring.koreanName}
           </p>
           <h1 className="text-white text-2xl font-semibold tabular-nums">
@@ -83,7 +83,7 @@ function SparringSequenceDetail() {
             <p
               className={cn(
                 "text-sm text-white/70 leading-relaxed rounded-sm",
-                "bg-yellow-300/5 ring-1 ring-yellow-300/20 px-3 py-2.5"
+                "bg-primary/5 ring-1 ring-primary/20 px-3 py-2.5"
               )}
             >
               {sequence.counter}

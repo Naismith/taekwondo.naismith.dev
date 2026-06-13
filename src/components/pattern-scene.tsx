@@ -19,7 +19,7 @@ type PatternSceneProps = {
 
 const MAT_SIZE = 2.6;
 const MAT_COLOR = "#1e3a5f";
-const LINE_COLOR = "#facc15";
+const LINE_COLOR = "#c084fc";
 
 function DojangMat() {
   return (
@@ -53,7 +53,7 @@ function CornerLabel({ point }: { point: TrainingPoint }) {
       position={[x * (1 + offset), 0.04, z * (1 + offset)]}
       rotation={[-Math.PI / 2, 0, 0]}
       fontSize={0.12}
-      color="#facc15"
+      color="#c084fc"
       anchorX="center"
       anchorY="middle"
     >
@@ -71,7 +71,7 @@ function PathLine({ points }: { points: [number, number, number][] }) {
   return (
     <Line
       points={linePoints}
-      color="#fde047"
+      color="#d8b4fe"
       transparent
       opacity={0.45}
       lineWidth={1}
@@ -96,8 +96,8 @@ function StepMarkers({
           <mesh key={step.index} position={[x, 0.04, z]}>
             <sphereGeometry args={[isSelected ? 0.07 : 0.045, 16, 16]} />
             <meshStandardMaterial
-              color={isSelected ? "#fde047" : "#ffffff"}
-              emissive={isSelected ? "#ca8a04" : "#000000"}
+              color={isSelected ? "#d8b4fe" : "#ffffff"}
+              emissive={isSelected ? "#9333ea" : "#000000"}
               emissiveIntensity={isSelected ? 0.35 : 0}
             />
           </mesh>
@@ -131,8 +131,8 @@ function Practitioner({
       <mesh position={[0, 0.55, 0.28]} rotation={[Math.PI / 2, 0, 0]}>
         <coneGeometry args={[0.06, 0.18, 8]} />
         <meshStandardMaterial
-          color="#fde047"
-          emissive="#ca8a04"
+          color="#d8b4fe"
+          emissive="#9333ea"
           emissiveIntensity={0.25}
         />
       </mesh>

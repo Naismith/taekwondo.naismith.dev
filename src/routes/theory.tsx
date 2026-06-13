@@ -31,7 +31,7 @@ function TheoryList({ section }: { section: TheorySection }) {
             <p className="text-white font-medium">
               {item.label}
               {item.korean && (
-                <span className="text-yellow-300/70 font-normal ml-2">
+                <span className="text-primary/70 font-normal ml-2">
                   {item.korean}
                 </span>
               )}
@@ -69,7 +69,7 @@ function Theory() {
                 key={part.korean}
                 className="flex gap-3 rounded-sm bg-white/5 px-4 py-3 text-sm"
               >
-                <dt className="text-yellow-300 font-medium w-10 shrink-0">
+                <dt className="text-primary font-medium w-10 shrink-0">
                   {part.korean}
                 </dt>
                 <dd className="text-white/70">{part.meaning}</dd>
@@ -88,9 +88,9 @@ function Theory() {
             {studentOath.lines.map((line, index) => (
               <li
                 key={index}
-                className="flex gap-3 rounded-sm bg-yellow-300/5 ring-1 ring-yellow-300/20 px-4 py-3 text-sm leading-relaxed"
+                className="flex gap-3 rounded-sm bg-primary/5 ring-1 ring-primary/20 px-4 py-3 text-sm leading-relaxed"
               >
-                <span className="text-yellow-300/50 tabular-nums w-5 shrink-0 text-right">
+                <span className="text-primary/50 tabular-nums w-5 shrink-0 text-right">
                   {index + 1}
                 </span>
                 <span className="text-white/80">{line}</span>

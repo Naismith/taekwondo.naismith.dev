@@ -29,7 +29,7 @@ function PatternDetail() {
       <div className="max-w-4xl mx-auto">
         <Link
           to="/patterns"
-          className="inline-flex items-center gap-1.5 text-white/50 hover:text-yellow-300 text-sm mb-6 transition-colors"
+          className="inline-flex items-center gap-1.5 text-white/50 hover:text-primary text-sm mb-6 transition-colors"
         >
           <span aria-hidden>←</span>
           All patterns
@@ -78,7 +78,7 @@ function PatternDetail() {
                         className={cn(
                           "flex w-full gap-3 rounded-sm px-4 py-3 text-left text-sm leading-relaxed transition-colors cursor-pointer",
                           isSelected
-                            ? "bg-yellow-300/10 ring-1 ring-yellow-300/30"
+                            ? "bg-primary/10 ring-1 ring-primary/30"
                             : "bg-white/5 hover:bg-white/[0.07]"
                         )}
                       >
@@ -86,8 +86,8 @@ function PatternDetail() {
                           className={cn(
                             "tabular-nums w-5 shrink-0 text-right",
                             isSelected
-                              ? "text-yellow-300"
-                              : "text-yellow-300/50"
+                              ? "text-primary"
+                              : "text-primary/50"
                           )}
                         >
                           {index + 1}
