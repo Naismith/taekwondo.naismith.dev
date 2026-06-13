@@ -1,6 +1,7 @@
 export type TheorySection = {
   id: string;
   title: string;
+  description?: string;
   items: { label: string; detail: string; korean?: string }[];
 };
 
@@ -65,6 +66,25 @@ export const studentOath = {
     "I shall never misuse Taekwon-Do.",
     "I shall be a champion of freedom and justice.",
     "I shall build a more peaceful world.",
+  ],
+};
+
+export const koreanCounting: TheorySection = {
+  id: "counting",
+  title: "Counting in Korean",
+  description:
+    "Count aloud during patterns, fundamental exercises, and step-sparring — examiners test this from white belt onward.",
+  items: [
+    { label: "Hana", detail: "One" },
+    { label: "Dool", detail: "Two" },
+    { label: "Set", detail: "Three" },
+    { label: "Net", detail: "Four" },
+    { label: "Dasot", detail: "Five" },
+    { label: "Yasot", detail: "Six" },
+    { label: "Ilgop", detail: "Seven" },
+    { label: "Yodol", detail: "Eight" },
+    { label: "Ahop", detail: "Nine" },
+    { label: "Yeol", detail: "Ten" },
   ],
 };
 

@@ -9,6 +9,7 @@ import {
 import {
   beltColours,
   compositionOfTaekwondo,
+  koreanCounting,
   sineWavePrinciple,
   studentOath,
   taekwondoMeaning,
@@ -26,6 +27,7 @@ const sectionNav = [
   { id: "meaning", label: "Meaning" },
   { id: "tenets", label: "Tenets" },
   { id: "oath", label: "Oath" },
+  { id: "counting", label: "Counting" },
   { id: "colours", label: "Belts" },
   { id: "composition", label: "Composition" },
   { id: "theory-of-power", label: "Power" },
@@ -48,6 +50,9 @@ function TheoryList({ section }: { section: TheorySection }) {
   return (
     <section id={section.id}>
       <SectionHeading>{section.title}</SectionHeading>
+      {section.description && (
+        <p className={cn(highlightCardClass, "mb-4")}>{section.description}</p>
+      )}
       <ol className="flex flex-col gap-1.5">
         {section.items.map((item, index) => (
           <li
@@ -195,6 +200,8 @@ function Theory() {
               ))}
             </ol>
           </section>
+
+          <TheoryList section={koreanCounting} />
 
           <section id="colours">
             <SectionHeading>Belt Colour Meanings</SectionHeading>

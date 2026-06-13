@@ -72,7 +72,7 @@ function Glossary() {
           </p>
         </header>
 
-        <div className="relative mb-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="relative mb-8 flex flex-col gap-3">
           <input
             type="search"
             value={query}
