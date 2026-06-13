@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TheoryRouteImport } from './routes/theory'
 import { Route as SparringRouteImport } from './routes/sparring'
 import { Route as PatternsRouteImport } from './routes/patterns'
 import { Route as AboutRouteImport } from './routes/about'
@@ -19,6 +20,11 @@ import { Route as PatternIdRouteImport } from './routes/pattern.$id'
 import { Route as SparringTypeIndexRouteImport } from './routes/sparring.$type.index'
 import { Route as SparringTypeNumberRouteImport } from './routes/sparring.$type.$number'
 
+const TheoryRoute = TheoryRouteImport.update({
+  id: '/theory',
+  path: '/theory',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SparringRoute = SparringRouteImport.update({
   id: '/sparring',
   path: '/sparring',
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/patterns': typeof PatternsRoute
   '/sparring': typeof SparringRouteWithChildren
+  '/theory': typeof TheoryRoute
   '/pattern/$id': typeof PatternIdRoute
   '/sparring/$type': typeof SparringTypeRouteWithChildren
   '/sparring/': typeof SparringIndexRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/patterns': typeof PatternsRoute
+  '/theory': typeof TheoryRoute
   '/pattern/$id': typeof PatternIdRoute
   '/sparring': typeof SparringIndexRoute
   '/sparring/$type/$number': typeof SparringTypeNumberRoute
@@ -91,6 +99,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/patterns': typeof PatternsRoute
   '/sparring': typeof SparringRouteWithChildren
+  '/theory': typeof TheoryRoute
   '/pattern/$id': typeof PatternIdRoute
   '/sparring/$type': typeof SparringTypeRouteWithChildren
   '/sparring/': typeof SparringIndexRoute
@@ -104,6 +113,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/patterns'
     | '/sparring'
+    | '/theory'
     | '/pattern/$id'
     | '/sparring/$type'
     | '/sparring/'
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/patterns'
+    | '/theory'
     | '/pattern/$id'
     | '/sparring'
     | '/sparring/$type/$number'
@@ -124,6 +135,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/patterns'
     | '/sparring'
+    | '/theory'
     | '/pattern/$id'
     | '/sparring/$type'
     | '/sparring/'
@@ -136,11 +148,19 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   PatternsRoute: typeof PatternsRoute
   SparringRoute: typeof SparringRouteWithChildren
+  TheoryRoute: typeof TheoryRoute
   PatternIdRoute: typeof PatternIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/theory': {
+      id: '/theory'
+      path: '/theory'
+      fullPath: '/theory'
+      preLoaderRoute: typeof TheoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sparring': {
       id: '/sparring'
       path: '/sparring'
@@ -240,6 +260,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   PatternsRoute: PatternsRoute,
   SparringRoute: SparringRouteWithChildren,
+  TheoryRoute: TheoryRoute,
   PatternIdRoute: PatternIdRoute,
 }
 export const routeTree = rootRouteImport

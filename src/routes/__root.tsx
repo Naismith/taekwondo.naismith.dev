@@ -27,6 +27,12 @@ function RootLayout() {
           Sparring
         </Link>
         <Link
+          to="/theory"
+          className="text-white hover:text-yellow-300 transition-colors [&.active]:text-yellow-300"
+        >
+          Theory
+        </Link>
+        <Link
           to="/about"
           className="text-white hover:text-yellow-300 transition-colors [&.active]:text-yellow-300"
         >
