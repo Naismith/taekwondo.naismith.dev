@@ -67,8 +67,8 @@ function SparringSequenceDetail() {
         <div aria-hidden className="accent-glow" />
 
         <Link
-          to="/sparring/$type"
-          params={{ type: sparring.id }}
+          to="/sparring"
+          hash={sparring.id}
           className="relative mb-6 inline-flex items-center gap-1.5 text-sm text-white/50 transition-colors hover:text-primary"
         >
           <span aria-hidden>←</span>

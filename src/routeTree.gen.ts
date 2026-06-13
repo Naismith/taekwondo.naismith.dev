@@ -16,7 +16,6 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as SparringIndexRouteImport } from './routes/sparring.index'
 import { Route as SparringTypeRouteImport } from './routes/sparring.$type'
 import { Route as PatternIdRouteImport } from './routes/pattern.$id'
-import { Route as SparringTypeIndexRouteImport } from './routes/sparring.$type.index'
 import { Route as SparringTypeNumberRouteImport } from './routes/sparring.$type.$number'
 
 const TheoryRoute = TheoryRouteImport.update({
@@ -54,11 +53,6 @@ const PatternIdRoute = PatternIdRouteImport.update({
   path: '/pattern/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SparringTypeIndexRoute = SparringTypeIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => SparringTypeRoute,
-} as any)
 const SparringTypeNumberRoute = SparringTypeNumberRouteImport.update({
   id: '/$number',
   path: '/$number',
@@ -74,16 +68,15 @@ export interface FileRoutesByFullPath {
   '/sparring/$type': typeof SparringTypeRouteWithChildren
   '/sparring/': typeof SparringIndexRoute
   '/sparring/$type/$number': typeof SparringTypeNumberRoute
-  '/sparring/$type/': typeof SparringTypeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/patterns': typeof PatternsRoute
   '/theory': typeof TheoryRoute
   '/pattern/$id': typeof PatternIdRoute
+  '/sparring/$type': typeof SparringTypeRouteWithChildren
   '/sparring': typeof SparringIndexRoute
   '/sparring/$type/$number': typeof SparringTypeNumberRoute
-  '/sparring/$type': typeof SparringTypeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -95,7 +88,6 @@ export interface FileRoutesById {
   '/sparring/$type': typeof SparringTypeRouteWithChildren
   '/sparring/': typeof SparringIndexRoute
   '/sparring/$type/$number': typeof SparringTypeNumberRoute
-  '/sparring/$type/': typeof SparringTypeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -108,16 +100,15 @@ export interface FileRouteTypes {
     | '/sparring/$type'
     | '/sparring/'
     | '/sparring/$type/$number'
-    | '/sparring/$type/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/patterns'
     | '/theory'
     | '/pattern/$id'
+    | '/sparring/$type'
     | '/sparring'
     | '/sparring/$type/$number'
-    | '/sparring/$type'
   id:
     | '__root__'
     | '/'
@@ -128,7 +119,6 @@ export interface FileRouteTypes {
     | '/sparring/$type'
     | '/sparring/'
     | '/sparring/$type/$number'
-    | '/sparring/$type/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -190,13 +180,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PatternIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sparring/$type/': {
-      id: '/sparring/$type/'
-      path: '/'
-      fullPath: '/sparring/$type/'
-      preLoaderRoute: typeof SparringTypeIndexRouteImport
-      parentRoute: typeof SparringTypeRoute
-    }
     '/sparring/$type/$number': {
       id: '/sparring/$type/$number'
       path: '/$number'
@@ -209,12 +192,10 @@ declare module '@tanstack/react-router' {
 
 interface SparringTypeRouteChildren {
   SparringTypeNumberRoute: typeof SparringTypeNumberRoute
-  SparringTypeIndexRoute: typeof SparringTypeIndexRoute
 }
 
 const SparringTypeRouteChildren: SparringTypeRouteChildren = {
   SparringTypeNumberRoute: SparringTypeNumberRoute,
-  SparringTypeIndexRoute: SparringTypeIndexRoute,
 }
 
 const SparringTypeRouteWithChildren = SparringTypeRoute._addFileChildren(
