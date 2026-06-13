@@ -2,6 +2,15 @@
 
 This document describes the architecture of **taekwondo.naismith.dev** — a client-side single-page application (SPA) for ITF Taekwondo reference content: belt progression, patterns (tul), sparring sets, theory, and 3D pattern visualization.
 
+## Documentation
+
+When docs disagree, follow this order:
+
+1. **Source code**
+2. **[DESIGN.md](./DESIGN.md)** — visual and styling ([Google Labs DESIGN.md spec](https://github.com/google-labs-code/design.md/blob/main/docs/spec.md))
+3. **ARCHITECTURE.md** (this file) — structure, routing, build, data
+4. **[AGENTS.md](./AGENTS.md)** — agent quick-start
+
 ## Overview
 
 The application is a static, browser-rendered React app with no backend or API layer. All UI runs in the client. Content comes from static TypeScript modules in `src/data/`. Routing is handled entirely on the client via TanStack Router. There is no server-side rendering (SSR), no global state management library, and no data fetching layer.

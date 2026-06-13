@@ -149,6 +149,25 @@ components:
 
 ## Overview
 
+This file follows the [Google Labs DESIGN.md spec](https://github.com/google-labs-code/design.md/blob/main/docs/spec.md). The YAML frontmatter holds machine-readable design tokens; the markdown body holds human-readable rationale. **Tokens are normative** — prose explains how to apply them when edge cases arise. `{colors.primary}` references in the `components` block use the spec's token-reference syntax.
+
+### Implementation
+
+In this codebase, tokens map to Tailwind via `@theme` in `src/index.css`. Use utility classes in JSX and `cn()` from `~/utils` for composition. Shared layout helpers: `@utility page-shell`, `@utility content-column`, `@utility ambient-glow`, `@utility accent-glow`. Inter is loaded in `index.html`.
+
+| Token source                                 | Implementation                                                 |
+| -------------------------------------------- | -------------------------------------------------------------- |
+| `colors.primary`, belt colors, dojang colors | `@theme` → `text-primary`, `bg-belt-yellow`, etc.              |
+| `colors.surface-container*`                  | `bg-white/5`, `bg-white/10` (white-alpha surfaces)             |
+| `colors.on-surface*`                         | `text-white/70`, `text-white/50`, etc.                         |
+| `typography.*`                               | Tailwind size/weight/tracking utilities per Components section |
+| `rounded.*`                                  | `@theme` radius tokens → `rounded-sm`, `rounded-md`            |
+| `spacing.*`                                  | Tailwind spacing scale (`px-4`, `gap-2`, `max-w-2xl`, etc.)    |
+
+Add new **wired** tokens to `@theme` when they will be reused; one-off opacity variants can stay as inline utilities if they match existing on-surface hierarchy.
+
+### Visual direction
+
 The visual direction is a blend of **Linear's structured product minimalism** and **Fey's cinematic premium interface language**.
 
 The goal is a taekwondo learning app that feels disciplined, modern, premium, calm, precise, motivating, and serious — without feeling cold.
@@ -227,7 +246,7 @@ Linear-style **single-column content shell** with restrained max-width.
 - **Rhythm:** 4px base grid. Common gaps: `gap-1.5` (6px tight lists), `gap-2` (8px list rows), `gap-4` (16px card grids), `gap-8` (32px page sections).
 - **Density:** Restrained. One primary action per row. List rows are tappable cards, not dense tables.
 - **Navigation:** Fixed top bar, low-noise text links. No hamburger, no sidebar, no icon-only nav on desktop.
-- **3D viewer:** Full-width within content column or breakout on pattern detail — the immersive Fey moment in an otherwise Linear layout.
+- **3D viewer:** Full-width within the content column on pattern detail — the immersive Fey moment in an otherwise Linear layout.
 
 ## Elevation & Depth
 
@@ -278,7 +297,7 @@ Full-width row: `flex items-center gap-3 rounded-sm bg-white/5 px-4 py-3 transit
 
 - Leading: numeric index or icon slot (`text-primary/60 tabular-nums w-6 text-center`).
 - Body: title (`text-white font-medium`) + subtitle (`text-white/50 text-sm truncate`).
-  -Trailing: metadata (`text-white/40 text-xs`) + optional `MiniBelt` + chevron (`text-white/30 text-xs`).
+- Trailing: metadata (`text-white/40 text-xs`) + optional `MiniBelt` + chevron (`text-white/30 text-xs`).
 
 ### Step list
 
@@ -299,7 +318,7 @@ For meanings, oath text, and semantic callouts: `bg-primary/5 ring-1 ring-primar
 
 ### Belt ladder
 
-Vertical progression on home. Each rank is a horizontal `Belt` bar with rank label. The ladder is the primary **progress visualization** — present it with Fey drama (subtle glow on current rank, clean alignment) without gamification badges.
+Vertical progression on home. Each rank is a horizontal `Belt` bar with rank label. The ladder is the primary **progress visualization** — clean alignment first; optional subtle glow on a focal rank is permitted but not required. No gamification badges.
 
 ### 3D pattern scene
 

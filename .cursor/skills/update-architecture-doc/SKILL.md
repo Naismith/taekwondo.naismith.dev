@@ -25,8 +25,9 @@ Update `ARCHITECTURE.md` when changes affect **how the app is built, organized, 
 
 - Bug fixes, copy, or styling tweaks within existing patterns
 - New components using established conventions
-- Route pages that follow existing file-based routing
 - Patch/minor dependency bumps with no behavioral impact
+
+**Always update** route tables, project structure trees, and the overview diagram when routes or top-level directories change — even if the new route follows existing file-based routing patterns.
 
 When uncertain, update — stale docs are worse than brief over-documentation.
 
@@ -44,15 +45,15 @@ Task Progress:
 
 Review the diff or completed work. Classify each change:
 
-| Change type | Sections likely affected |
-|-------------|-------------------------|
-| New dependency | Tech Stack, Bootstrap, State and Data, Build |
-| New route | Routing (route tree), Project Structure, Pages, Overview diagram |
-| New `src/` directory | Project Structure, Conventions for Extension |
-| Provider added to `main.tsx` | Bootstrap, State and Data |
-| API/data layer | Overview, State and Data, Deployment Model |
-| Build/config change | Build and Development, Tech Stack |
-| Styling system change | Styling, Tech Stack |
+| Change type                  | Sections likely affected                                         |
+| ---------------------------- | ---------------------------------------------------------------- |
+| New dependency               | Tech Stack, Bootstrap, State and Data, Build                     |
+| New route                    | Routing (route tree), Project Structure, Pages, Overview diagram |
+| New `src/` directory         | Project Structure, Conventions for Extension                     |
+| Provider added to `main.tsx` | Bootstrap, State and Data                                        |
+| API/data layer               | Overview, State and Data, Deployment Model                       |
+| Build/config change          | Build and Development, Tech Stack                                |
+| Styling system change        | Styling, Tech Stack                                              |
 
 See [reference.md](reference.md) for the full section guide.
 
@@ -91,19 +92,19 @@ Before finishing, confirm:
 
 ## Section Quick Reference
 
-| Section | Update when… |
-|---------|-------------|
-| Overview | Deployment model, SSR, backend, or high-level data flow changes |
-| Tech Stack | New architectural dependency or replacement |
-| Project Structure | Files/directories added, moved, or removed at top level |
-| Application Bootstrap | `main.tsx` providers, entry flow, or router setup changes |
-| Routing | Routes, layouts, loaders, or router config changes |
-| Pages and Components | Major new pages or shared component directories |
-| Styling | CSS framework, theme approach, or global style architecture changes |
-| Build and Development | Scripts, Vite config, TypeScript setup, or linting changes |
-| State and Data | Stores, fetching, env vars, or URL state introduced/removed |
-| Deployment Model | Output dir, hosting requirements, or server runtime needs change |
-| Conventions for Extension | New established patterns or directories agents should follow |
+| Section                   | Update when…                                                        |
+| ------------------------- | ------------------------------------------------------------------- |
+| Overview                  | Deployment model, SSR, backend, or high-level data flow changes     |
+| Tech Stack                | New architectural dependency or replacement                         |
+| Project Structure         | Files/directories added, moved, or removed at top level             |
+| Application Bootstrap     | `main.tsx` providers, entry flow, or router setup changes           |
+| Routing                   | Routes, layouts, loaders, or router config changes                  |
+| Pages and Components      | Major new pages or shared component directories                     |
+| Styling                   | CSS framework, theme approach, or global style architecture changes |
+| Build and Development     | Scripts, Vite config, TypeScript setup, or linting changes          |
+| State and Data            | Stores, fetching, env vars, or URL state introduced/removed         |
+| Deployment Model          | Output dir, hosting requirements, or server runtime needs change    |
+| Conventions for Extension | New established patterns or directories agents should follow        |
 
 ## Overview Diagram
 

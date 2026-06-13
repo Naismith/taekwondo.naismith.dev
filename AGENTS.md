@@ -1,15 +1,28 @@
 # AGENTS.md
 
-Guide for AI agents working on **taekwondo.naismith.dev** — a static React SPA for ITF Taekwondo reference content (belt progression, patterns/tul, and 3D pattern visualization).
+Guide for AI agents working on **taekwondo.naismith.dev** — a static React SPA for ITF Taekwondo reference content: belt progression, patterns (tul), sparring sets, theory, and 3D pattern visualization.
+
+## Documentation
+
+When docs disagree, follow this order:
+
+1. **Source code** — ground truth for what exists
+2. **[DESIGN.md](./DESIGN.md)** — visual and styling decisions ([Google Labs DESIGN.md spec](https://github.com/google-labs-code/design.md/blob/main/docs/spec.md))
+3. **[ARCHITECTURE.md](./ARCHITECTURE.md)** — structure, routing, build, and data flow
+4. **AGENTS.md** (this file) — quick-start summary; defer to the docs above when details differ
+
+| Doc             | Use for                                                   |
+| --------------- | --------------------------------------------------------- |
+| DESIGN.md       | Colors, typography, spacing, components, visual rationale |
+| ARCHITECTURE.md | Routes, directories, bootstrap, static data, deployment   |
+| AGENTS.md       | Commands, conventions, domain concepts, where to look     |
 
 ## What this app is
 
 - Client-only SPA: no backend, no API, no auth, no global state library
-- Static data in `src/data/` (pattern metadata and step-by-step movement text)
-- Dark UI with Tailwind CSS v4 — colors, typography, layout, and component patterns are defined in [DESIGN.md](./DESIGN.md)
+- Static data in `src/data/` (patterns, sparring, theory)
+- Dark UI with Tailwind CSS v4 — tokens and component patterns in [DESIGN.md](./DESIGN.md)
 - Deployed as static files from `dist/` (SPA fallback required on the host)
-
-For deeper architectural detail, see [ARCHITECTURE.md](./ARCHITECTURE.md). For all visual and styling decisions, see [DESIGN.md](./DESIGN.md).
 
 ## Tech stack
 
@@ -44,31 +57,45 @@ src/
 │   └── pattern-scene.tsx    # R3F dojang mat + path visualization
 ├── data/
 │   ├── itf-patterns.ts      # pattern list, ranks, slug helpers
-│   └── pattern-steps.ts     # step-by-step movement text per pattern
+│   ├── pattern-steps.ts     # step-by-step movement text per pattern
+│   ├── sparring.ts          # 2-step and 3-step sparring definitions
+│   └── theory.ts            # theory reference content
 └── routes/
     ├── __root.tsx           # nav + Outlet
     ├── index.tsx            # / — belt ladder
     ├── patterns.tsx         # /patterns — pattern list
     ├── pattern.$id.tsx      # /pattern/:id — detail + 3D viewer
+    ├── sparring.tsx         # /sparring layout
+    ├── sparring.index.tsx
+    ├── sparring.$type.tsx
+    ├── sparring.$type.index.tsx
+    ├── sparring.$type.$number.tsx
+    ├── theory.tsx           # /theory
     └── about.tsx            # /about — placeholder
 ```
 
 ## Routes
 
-| Path           | File                     | Purpose                              |
-| -------------- | ------------------------ | ------------------------------------ |
-| `/`            | `routes/index.tsx`       | Coloured belt progression ladder     |
-| `/patterns`    | `routes/patterns.tsx`    | Browse all ITF patterns by section   |
-| `/pattern/:id` | `routes/pattern.$id.tsx` | Pattern detail, step list, R3F scene |
-| `/about`       | `routes/about.tsx`       | Placeholder about page               |
+| Path                      | File                                | Purpose                                      |
+| ------------------------- | ----------------------------------- | -------------------------------------------- |
+| `/`                       | `routes/index.tsx`                  | Coloured belt progression ladder             |
+| `/patterns`               | `routes/patterns.tsx`               | Browse all ITF patterns by section           |
+| `/pattern/:id`            | `routes/pattern.$id.tsx`            | Pattern detail, step list, R3F scene         |
+| `/sparring`               | `routes/sparring.index.tsx`         | Sparring type index                          |
+| `/sparring/:type`         | `routes/sparring.$type.index.tsx`   | Sequence list for a sparring type            |
+| `/sparring/:type/:number` | `routes/sparring.$type.$number.tsx` | Single sparring sequence                     |
+| `/theory`                 | `routes/theory.tsx`                 | Theory reference (tenets, definitions, oath) |
+| `/about`                  | `routes/about.tsx`                  | Placeholder about page                       |
 
-Pattern IDs are slugs derived from names (`Chon-Ji` → `chon-ji`) via `patternToId()` in `~/data/itf-patterns`.
+Pattern IDs are slugs derived from names (`Chon-Ji` → `chon-ji`) via `patternToId()` in `~/data/itf-patterns`. Sparring `:type` values match `SparringType` in `~/data/sparring.ts` (e.g. `3-step`, `2-step`).
+
+Sparring uses nested layout routes (`sparring.tsx`, `sparring.$type.tsx`) that render only an `<Outlet />`. See [ARCHITECTURE.md](./ARCHITECTURE.md) for routing detail.
 
 ## Conventions
 
 - **Imports:** use the `~` alias for `src/` (e.g. `import { cn } from "~/utils"`), not relative `../` paths
 - **New routes:** add a file under `src/routes/`; TanStack Router regenerates `routeTree.gen.ts`
-- **Styling:** follow [DESIGN.md](./DESIGN.md) for colors, typography, spacing, and component patterns; implement with Tailwind utilities in JSX and `@theme` tokens in `index.css`; use `cn()` for conditional/merged classes
+- **Styling:** follow [DESIGN.md](./DESIGN.md) (Google Labs spec); YAML frontmatter tokens are normative; implement with Tailwind utilities, `@theme` in `index.css`, and `cn()`
 - **Components:** shared UI lives in `src/components/`
 - **Data:** static TS modules in `src/data/` — no fetch layer
 - **State:** local React state only (`useState`, `useMemo`); no Redux/Zustand/Query
@@ -84,9 +111,11 @@ Pattern IDs are slugs derived from names (`Chon-Ji` → `chon-ji`) via `patternT
 
 - Add pattern metadata → `src/data/itf-patterns.ts`
 - Add step text → `src/data/pattern-steps.ts` (keyed by pattern name)
+- Add sparring content → `src/data/sparring.ts`
+- Add theory content → `src/data/theory.ts`
 - New shared UI → `src/components/`
 - New pages → `src/routes/` (file name = URL shape, e.g. `pattern.$id.tsx`)
-- Visual or styling changes → follow [DESIGN.md](./DESIGN.md); extend `@theme` in `index.css` when adding tokens
+- Visual or styling changes → update [DESIGN.md](./DESIGN.md) tokens/prose; extend `@theme` in `index.css` when adding wired tokens
 - Architectural changes → update [ARCHITECTURE.md](./ARCHITECTURE.md) using the `.cursor/skills/update-architecture-doc` skill
 
 ## What to avoid
