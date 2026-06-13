@@ -9,12 +9,12 @@ export const Route = createFileRoute("/sparring/")({
 
 function Sparring() {
   return (
-    <div className="min-h-screen bg-black pt-14 px-4 pb-8">
-      <div className="max-w-2xl mx-auto">
-        <h1 className="text-white text-2xl font-semibold mb-1">
+    <div className="page-shell">
+      <div className="content-column">
+        <h1 className="mb-1 text-2xl font-semibold tracking-tight text-white">
           Pre-arranged Sparring
         </h1>
-        <p className="text-white/60 text-sm mb-6">
+        <p className="mb-6 text-sm text-white/50">
           Yaksok Matsogi — fixed attack and defence sequences used to develop
           distance, timing, blocking, and counter-attacking.
         </p>

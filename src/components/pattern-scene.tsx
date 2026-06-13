@@ -19,7 +19,7 @@ type PatternSceneProps = {
 
 const MAT_SIZE = 2.6;
 const MAT_COLOR = "#1e3a5f";
-const LINE_COLOR = "#c084fc";
+const PRIMARY_COLOR = "#c084fc";
 
 function DojangMat() {
   return (
@@ -32,13 +32,21 @@ function DojangMat() {
         <edgesGeometry
           args={[new THREE.PlaneGeometry(MAT_SIZE * 0.92, MAT_SIZE * 0.92)]}
         />
-        <lineBasicMaterial color={LINE_COLOR} transparent opacity={0.6} />
+        <lineBasicMaterial
+          color={PRIMARY_COLOR}
+          transparent
+          opacity={0.6}
+        />
       </lineSegments>
       <lineSegments rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.003, 0]}>
         <edgesGeometry
           args={[new THREE.PlaneGeometry(MAT_SIZE * 0.46, MAT_SIZE * 0.46)]}
         />
-        <lineBasicMaterial color={LINE_COLOR} transparent opacity={0.25} />
+        <lineBasicMaterial
+          color={PRIMARY_COLOR}
+          transparent
+          opacity={0.25}
+        />
       </lineSegments>
     </group>
   );
@@ -53,7 +61,7 @@ function CornerLabel({ point }: { point: TrainingPoint }) {
       position={[x * (1 + offset), 0.04, z * (1 + offset)]}
       rotation={[-Math.PI / 2, 0, 0]}
       fontSize={0.12}
-      color="#c084fc"
+      color={PRIMARY_COLOR}
       anchorX="center"
       anchorY="middle"
     >
@@ -71,7 +79,7 @@ function PathLine({ points }: { points: [number, number, number][] }) {
   return (
     <Line
       points={linePoints}
-      color="#d8b4fe"
+      color={PRIMARY_COLOR}
       transparent
       opacity={0.45}
       lineWidth={1}
@@ -96,8 +104,8 @@ function StepMarkers({
           <mesh key={step.index} position={[x, 0.04, z]}>
             <sphereGeometry args={[isSelected ? 0.07 : 0.045, 16, 16]} />
             <meshStandardMaterial
-              color={isSelected ? "#d8b4fe" : "#ffffff"}
-              emissive={isSelected ? "#9333ea" : "#000000"}
+              color={isSelected ? PRIMARY_COLOR : "#ffffff"}
+              emissive={isSelected ? PRIMARY_COLOR : "#000000"}
               emissiveIntensity={isSelected ? 0.35 : 0}
             />
           </mesh>
@@ -131,8 +139,8 @@ function Practitioner({
       <mesh position={[0, 0.55, 0.28]} rotation={[Math.PI / 2, 0, 0]}>
         <coneGeometry args={[0.06, 0.18, 8]} />
         <meshStandardMaterial
-          color="#d8b4fe"
-          emissive="#9333ea"
+          color={PRIMARY_COLOR}
+          emissive={PRIMARY_COLOR}
           emissiveIntensity={0.25}
         />
       </mesh>
@@ -191,12 +199,21 @@ export function PatternScene({
   return (
     <div
       className={cn(
-        "relative aspect-[4/3] w-full overflow-hidden rounded-sm bg-black ring-1 ring-white/10",
+        "relative aspect-[4/3] w-full overflow-hidden rounded-md bg-surface p-2 ring-1 ring-white/10",
         className
       )}
     >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(30,58,95,0.4)_0%,transparent_70%)]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_80%_20%,rgba(192,132,252,0.08)_0%,transparent_50%)]"
+      />
       <Canvas
         shadows
+        className="relative z-[1]"
         camera={{ position: [2.4, 2.8, 2.4], fov: 42 }}
         gl={{ antialias: true }}
       >
@@ -204,7 +221,7 @@ export function PatternScene({
           <SceneContent steps={steps} selectedStep={selectedStep} />
         </Suspense>
       </Canvas>
-      <p className="pointer-events-none absolute bottom-2 left-3 text-[11px] text-white/35">
+      <p className="pointer-events-none absolute bottom-3 left-4 z-[2] text-[11px] text-white/30">
         Drag to orbit · A start · D forward
       </p>
     </div>

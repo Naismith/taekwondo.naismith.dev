@@ -6,8 +6,16 @@ export const Route = createFileRoute("/about")({
 
 function About() {
   return (
-    <div className="flex items-center justify-center h-screen bg-black pt-14">
-      <p className="text-white text-xl">About Taekwondo</p>
+    <div className="page-shell">
+      <div className="content-column">
+        <h1 className="mb-1 text-2xl font-semibold tracking-tight text-white">
+          About
+        </h1>
+        <p className="text-sm text-white/50">
+          ITF Taekwondo reference — patterns, sparring, and theory for
+          serious practitioners.
+        </p>
+      </div>
     </div>
   );
 }

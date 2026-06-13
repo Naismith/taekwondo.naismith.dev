@@ -3,5 +3,45 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
-  --color-primary: var(--color-purple-400);
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-primary: #c084fc;
+  --color-on-primary: #000000;
+  --color-surface: #0a0a0a;
+  --color-dojang-mat: #1e3a5f;
+  --color-dojang-line: #c084fc;
+
+  --color-belt-white: #ffffff;
+  --color-belt-yellow: #fde047;
+  --color-belt-green: #4ade80;
+  --color-belt-blue: #60a5fa;
+  --color-belt-red: #f87171;
+  --color-belt-black: #000000;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+}
+
+@layer base {
+  body {
+    @apply bg-black font-sans text-white antialiased;
+  }
+}
+
+@utility page-shell {
+  @apply min-h-screen bg-black pt-14 px-4 pb-8;
+}
+
+@utility content-column {
+  @apply mx-auto max-w-2xl;
+}
+
+@utility ambient-glow {
+  @apply pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_50%_0%,rgba(30,58,95,0.4)_0%,transparent_70%)];
+}
+
+@utility accent-glow {
+  @apply pointer-events-none absolute inset-x-0 top-0 h-48 bg-[radial-gradient(ellipse_at_80%_20%,rgba(192,132,252,0.08)_0%,transparent_50%)];
 }

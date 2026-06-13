@@ -25,23 +25,23 @@ function PatternDetail() {
   const pathSteps = useMemo(() => buildPatternPath(steps), [steps]);
 
   return (
-    <div className="min-h-screen bg-black pt-14 px-4 pb-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="page-shell">
+      <div className="content-column">
         <Link
           to="/patterns"
-          className="inline-flex items-center gap-1.5 text-white/50 hover:text-primary text-sm mb-6 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-white/50 transition-colors hover:text-primary mb-6"
         >
           <span aria-hidden>←</span>
           All patterns
         </Link>
 
         <header className="mb-6">
-          <h1 className="text-white text-2xl font-semibold mb-1">
+          <h1 className="mb-1 text-2xl font-semibold tracking-tight text-white">
             {pattern.name}
           </h1>
-          <p className="text-white/60">{pattern.meaning}</p>
+          <p className="text-sm text-white/50">{pattern.meaning}</p>
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-            <span className="text-white/70 tabular-nums">
+            <span className="text-primary/80 tabular-nums">
               {pattern.movements} movements
             </span>
             <div className="flex items-center gap-2">
@@ -63,10 +63,10 @@ function PatternDetail() {
             />
 
             <section>
-              <h2 className="text-white/80 text-sm font-medium uppercase tracking-wide mb-3">
+              <h2 className="mb-3 text-sm font-medium uppercase tracking-wide text-white/80">
                 Movements
               </h2>
-              <ol className="flex flex-col gap-2.5">
+              <ol className="flex flex-col gap-1.5">
                 {steps.map((step, index) => {
                   const isSelected = selectedStep === index;
 
@@ -76,18 +76,16 @@ function PatternDetail() {
                         type="button"
                         onClick={() => setSelectedStep(index)}
                         className={cn(
-                          "flex w-full gap-3 rounded-sm px-4 py-3 text-left text-sm leading-relaxed transition-colors cursor-pointer",
+                          "flex w-full gap-3 rounded-sm px-3 py-2.5 text-left text-sm leading-relaxed transition-colors cursor-pointer",
                           isSelected
-                            ? "bg-primary/10 ring-1 ring-primary/30"
-                            : "bg-white/5 hover:bg-white/[0.07]"
+                            ? "bg-primary/5 ring-1 ring-primary/20"
+                            : "bg-white/5 hover:bg-white/10"
                         )}
                       >
                         <span
                           className={cn(
-                            "tabular-nums w-5 shrink-0 text-right",
-                            isSelected
-                              ? "text-primary"
-                              : "text-primary/50"
+                            "w-5 shrink-0 text-right tabular-nums",
+                            isSelected ? "text-primary" : "text-primary/50"
                           )}
                         >
                           {index + 1}
@@ -107,7 +105,7 @@ function PatternDetail() {
             </section>
           </>
         ) : (
-          <p className="text-white/40 text-sm">
+          <p className="text-sm text-white/40">
             Step-by-step movements are not yet available for this pattern.
           </p>
         )}

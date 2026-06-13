@@ -1,12 +1,12 @@
 import { cn } from "~/utils";
 
 export const beltColors = {
-  white: "bg-white",
-  yellow: "bg-yellow-300",
-  green: "bg-green-400",
-  blue: "bg-blue-400",
-  red: "bg-red-400",
-  black: "bg-black",
+  white: "bg-belt-white",
+  yellow: "bg-belt-yellow",
+  green: "bg-belt-green",
+  blue: "bg-belt-blue",
+  red: "bg-belt-red",
+  black: "bg-belt-black",
 } as const;
 
 type BeltStyle = {

@@ -72,16 +72,18 @@ function PatternList({
 
 function Patterns() {
   return (
-    <div className="min-h-screen bg-black pt-14 px-4 pb-8">
-      <div className="max-w-2xl mx-auto">
-        <h1 className="text-white text-2xl font-semibold mb-1">ITF Patterns</h1>
-        <p className="text-white/60 text-sm mb-6">
+    <div className="page-shell">
+      <div className="content-column">
+        <h1 className="mb-1 text-2xl font-semibold tracking-tight text-white">
+          ITF Patterns
+        </h1>
+        <p className="mb-6 text-sm text-white/50">
           Fundamental exercises and the 24 International Taekwon-Do Federation
           tul. Select a pattern to view its step-by-step movements.
         </p>
         {patternSections.map(({ title, items, numbered }) => (
           <section key={title} className="mb-8 last:mb-0">
-            <h2 className="text-white/80 text-sm font-medium uppercase tracking-wide mb-3">
+            <h2 className="mb-3 text-sm font-medium uppercase tracking-wide text-white/80">
               {title}
             </h2>
             <PatternList items={items} numbered={numbered} />
