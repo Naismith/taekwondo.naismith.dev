@@ -10,7 +10,6 @@ export type SparringSequence = {
 export type SparringDefinition = {
   id: SparringType;
   name: string;
-  koreanName: string;
   description: string;
   rank: string;
   attackerStart: string;
@@ -30,245 +29,294 @@ export const sparringTypes: SparringDefinition[] = [
   {
     id: "3-step",
     name: "Three Step Sparring",
-    koreanName: "Sambo Matsogi",
     description:
-      "Pre-arranged sparring for beginners. The attacker advances three times with the same technique while the defender steps back, blocks, and counters on the third movement.",
+      "Pre-arranged sparring for beginners. The attacker advances three times while the defender steps back, blocks, and counters on the third movement. The attacker must place each stepping foot beside the defender's foot in this order: 1st outside, 2nd inside, 3rd inside.",
     rank: "9th Gup (Yellow Stripe) and above",
-    attackerStart:
-      "Left walking stance, obverse low section outer forearm block",
+    attackerStart: "Parallel ready stance",
     defenderStart: "Parallel ready stance",
-    fixedAttack: [
-      "Middle section obverse punch in walking stance",
-      "Middle section obverse punch in walking stance",
-      "Middle section obverse punch in walking stance",
-    ],
     sequences: [
       {
         number: 1,
-        attacks: [],
+        attacks: [
+          "Step forward into right walking stance, middle section obverse punch",
+          "Step forward into walking stance, middle section obverse punch",
+          "Step forward into walking stance, middle section obverse punch",
+        ],
         defences: [
-          "Step back with the right leg into walking stance, middle inner forearm block to the outside",
+          "Step back into left walking stance, middle inner forearm block to the outside",
           "Middle inner forearm block to the outside",
           "Middle inner forearm block to the outside",
         ],
-        counter: "Middle reverse punch",
+        counter: "Middle reverse punch — stationary",
       },
       {
         number: 2,
-        attacks: [],
-        defences: [
-          "Step back with the left leg into L-stance, middle inner forearm block to the outside",
-          "Middle inner forearm block to the outside",
-          "Middle inner forearm block to the outside",
+        attacks: [
+          "Step forward, low section front snap kick with the right leg, land in walking stance",
+          "Step forward, low section front snap kick with the right leg, land in walking stance",
+          "Step forward, low section front snap kick with the right leg, land in walking stance",
         ],
-        counter:
-          "Move the rear foot out to the left, bring the right foot across into L-stance, knifehand strike to the neck",
+        defences: [
+          "Step back into left walking stance, outer forearm low block",
+          "Outer forearm low block",
+          "Outer forearm low block",
+        ],
+        counter: "Low section front snap kick with the left leg",
       },
       {
         number: 3,
-        attacks: [],
+        attacks: [
+          "Step forward into left L-stance, middle section obverse punch",
+          "Step forward into left L-stance, middle section obverse punch",
+          "Step forward into left L-stance, middle section obverse punch",
+        ],
         defences: [
-          "Step back with the left leg into L-stance, middle outer forearm inward block",
-          "Middle outer forearm inward block",
-          "Middle outer forearm inward block",
+          "Step back into right L-stance, middle inner forearm block",
+          "Middle inner forearm block",
+          "Middle inner forearm block",
         ],
         counter:
-          "High backfist front strike to the bridge of the nose",
+          "Slide the left foot in while withdrawing the left arm to the belt, then slide the left foot forward into L-stance and execute a flat fingertip thrust to the armpit",
       },
       {
         number: 4,
-        attacks: [],
-        defences: [
-          "Step back with the left leg into L-stance, middle inner forearm block to the outside",
-          "Middle inner forearm block to the outside",
-          "Middle inner forearm block to the outside",
+        attacks: [
+          "Step forward into right walking stance, high section obverse punch",
+          "Step forward into walking stance, high section obverse punch",
+          "Step forward into walking stance, high section obverse punch",
         ],
-        counter:
-          "Move into sitting stance and execute a double punch to the kidney area",
+        defences: [
+          "Step back into left walking stance, forearm rising block",
+          "Forearm rising block",
+          "Forearm rising block",
+        ],
+        counter: "High section obverse punch — stationary",
       },
       {
         number: 5,
-        attacks: [],
-        defences: [
-          "Step back with the right leg into L-stance, middle outer forearm block to the inside",
-          "Middle outer forearm block to the inside",
-          "Slip the front foot to the outside into sitting stance while blocking",
+        attacks: [
+          "Step forward into left L-stance, knifehand strike",
+          "Step forward into left L-stance, knifehand strike",
+          "Step forward into left L-stance, knifehand strike",
         ],
-        counter:
-          "Left outer forearm block and high section punch to the jaw",
+        defences: [
+          "Step back into left L-stance, knifehand guarding block",
+          "Knifehand guarding block",
+          "Knifehand guarding block",
+        ],
+        counter: "Middle section side piercing kick with the right leg",
       },
       {
         number: 6,
-        attacks: [],
-        defences: [
-          "Step back with the right leg into L-stance, middle knifehand block to the inside",
-          "Middle knifehand block to the inside",
-          "Slip the front foot out into sitting stance while blocking",
+        attacks: [
+          "Step forward, high section side piercing kick with the right leg",
+          "Step forward, high section side piercing kick with the right leg",
+          "Step forward, high section side piercing kick with the right leg, then step down into sitting stance with twin straight forearm block",
         ],
-        counter: "Double punch to the kidney area",
+        defences: [
+          "Step back into left L-stance, forearm-guarding block",
+          "Forearm-guarding block",
+          "Forearm-guarding block",
+        ],
+        counter: "Reverse turning kick with the left leg",
       },
       {
         number: 7,
-        attacks: [],
+        attacks: [
+          "Step forward into left L-stance, middle section obverse punch",
+          "Step forward into left L-stance, middle section obverse punch",
+          "Step forward into left L-stance, middle section obverse punch",
+        ],
         defences: [
-          "Step back with the right leg into L-stance, middle outer forearm block to the inside",
-          "Middle outer forearm block to the inside",
-          "Slide back at a 45° angle to the right into right L-stance, middle forearm-guarding block",
+          "Step back into right L-stance, middle outer forearm inward block",
+          "Middle outer forearm inward block",
+          "Middle outer forearm inward block",
         ],
         counter:
-          "Step forward into middle front snap kick followed by middle double punch",
+          "Middle section side piercing kick with the left leg, then move the left foot to the right at 45° and execute a high section turning kick with the right leg to the temple (Kihap on turning kick only)",
       },
       {
         number: 8,
-        attacks: [],
-        defences: [
-          "Step back with the left leg into L-stance, palm heel block to the inside",
-          "Palm heel block to the inside",
-          "Slide back at a 45° angle to the right into left L-stance, middle forearm-guarding block",
+        attacks: [
+          "Step forward, high section side piercing kick with the right leg",
+          "Step forward, high section side piercing kick with the right leg",
+          "Step forward, high section side piercing kick with the right leg",
         ],
-        counter:
-          "Middle forearm-guarding block followed by counter attack as directed by instructor",
+        defences: [
+          "Step back into right walking stance, middle outer forearm inward block",
+          "Middle outer forearm inward block",
+          "Middle outer forearm inward block",
+        ],
+        counter: "Jumping side piercing kick with the right leg",
       },
       {
         number: 9,
-        attacks: [],
-        defences: [
-          "Step back with the right leg into L-stance, inward palm pushing block to the outside",
-          "Inward palm pushing block to the outside",
-          "Slide out to the side while blocking",
+        attacks: [
+          "Step forward, high section turning kick with the right leg",
+          "Step forward, high section turning kick with the right leg",
+          "Step forward, high section turning kick with the right leg",
         ],
-        counter:
-          "Slide back at a 45° angle to the left, rear leg middle turning kick, step behind opponent into left L-stance, high knifehand strike to the back of the neck",
+        defences: [
+          "Step back into right L-stance, knifehand guarding block",
+          "Knifehand guarding block",
+          "Knifehand guarding block",
+        ],
+        counter: "Jumping double turning kick (Kihap on second kick only)",
       },
       {
         number: 10,
-        attacks: [],
+        attacks: [
+          "Step forward, low section front snap kick with the right leg",
+          "Step forward, low section front snap kick with the right leg",
+          "Step forward, low section front snap kick with the right leg",
+        ],
         defences: [
-          "Step back with the right leg into L-stance, inside knifehand guarding block",
-          "Inside knifehand guarding block",
-          "Inside knifehand guarding block",
+          "Step back into left walking stance, X-fist low pressing block",
+          "X-fist low pressing block",
+          "X-fist low pressing block",
         ],
         counter:
-          "Move the right foot to the left foot, slide back at a 45° angle to the right into right L-stance, spinning back kick followed by reverse knifehand strike to the philtrum",
+          "Jumping double front snap kick with the right leg (Kihap on second kick only)",
       },
     ],
   },
   {
     id: "2-step",
     name: "Two Step Sparring",
-    koreanName: "Ibo Matsogi",
     description:
-      "Pre-arranged sparring for intermediate students. The attacker performs two consecutive hand and foot techniques; the defender blocks both and counters.",
+      "Pre-arranged sparring for intermediate students. The attacker performs two consecutive hand and foot techniques; the defender blocks both and counters. The attacker must place each stepping foot beside the defender's foot in this order: 1st outside, 2nd inside, 3rd inside.",
     rank: "6th Gup (Green Belt) and above",
-    attackerStart: "Right leg back L-stance, forearm guarding block",
+    attackerStart: "Parallel ready stance",
     defenderStart: "Parallel ready stance",
     sequences: [
       {
         number: 1,
         attacks: [
-          "Step forward into right walking stance, high section obverse punch",
-          "Step forward into left leg low front snap kick",
+          "Step forward into right walking stance, middle section obverse punch",
+          "Front snap kick with the left leg",
         ],
         defences: [
-          "Step back into left walking stance, forearm rising block",
-          "Step back into right walking stance, X-fist pressing block",
+          "Step back into left walking stance, middle inner forearm block",
+          "Change to right walking stance, outer forearm low block",
         ],
-        counter: "Twin vertical punch",
+        counter: "Front snap kick with the left leg",
       },
       {
         number: 2,
         attacks: [
-          "Step forward into fixed stance, side punch",
-          "Step forward into left leg middle section turning kick",
+          "Front snap kick with the right leg",
+          "Middle section turning kick with the left leg",
         ],
         defences: [
-          "Step back into right L-stance, palm upward block",
-          "Step back into left L-stance, waist block",
+          "Step back into left walking stance, X-fist low pressing block",
+          "Move the left foot to the side at 45° into sitting stance, knifehand high block with the right arm",
         ],
         counter:
-          "Slide forward into right L-stance, side elbow strike",
+          "Middle section obverse punch with the left arm (Kihap — this is the counterattack)",
       },
       {
         number: 3,
         attacks: [
-          "Step forward into right leg middle front snap kick",
-          "Step forward into left walking stance, twin vertical punch",
+          "Middle section side piercing kick with the right leg, step down beside the left foot",
+          "Back piercing kick with the left leg",
         ],
         defences: [
-          "Step back into right walking stance, X-fist pressing block",
-          "Step back into left walking stance, outer forearm wedging block",
+          "Step back into left L-stance, outer forearm low block with the right arm",
+          "Move the left foot to the side at 90° into sitting stance, outer forearm outward block",
         ],
-        counter:
-          "Grab the opponent's shoulders and pull down while executing a right knee kick",
+        counter: "Sitting stance, knifehand strike to the neck with the right arm",
       },
       {
         number: 4,
         attacks: [
-          "Step forward into right walking stance, flat fingertip thrust",
-          "Step forward into left leg side piercing kick",
+          "Step forward into right walking stance, middle section obverse punch",
+          "Side piercing kick with the left leg",
         ],
         defences: [
-          "Step back into right walking stance, knifehand rising block",
-          "Step back into left L-stance, inward palm block",
+          "Slide back into right rear foot stance, forearm-guarding block",
+          "Move the left foot to the side at 45° into left leg bending ready stance A, forearm-guarding block",
         ],
-        counter:
-          "Front kick to the coccyx followed by twin upset punch to the kidneys",
+        counter: "Side piercing kick with the right leg",
       },
       {
         number: 5,
         attacks: [
-          "Step forward into right leg middle front snap kick",
-          "Step forward into left walking stance, twin upset punch",
+          "Middle section turning kick with the right leg",
+          "Step down into left L-stance, knifehand strike with the right arm",
         ],
         defences: [
-          "Step back into right walking stance, X-fist pressing block",
-          "Step back into left L-stance, outer forearm waist block",
+          "Left L-stance, outer forearm inward block with the right arm",
+          "Slide the left foot backward into left L-stance, knifehand guarding block",
         ],
-        counter: "Right leg middle side piercing kick",
+        counter: "Turning kick with the right leg to the temple",
       },
       {
         number: 6,
         attacks: [
-          "Step forward into right leg back piercing kick",
-          "Step forward into left walking stance, high obverse palm strike",
+          "Step forward into left L-stance, knifehand strike with the right arm",
+          "Middle section turning kick with the left leg",
         ],
         defences: [
-          "Step back into right L-stance, forearm waist block",
-          "Step back into left L-stance, outer forearm waist block",
+          "Left L-stance, knifehand guarding block",
+          "Move the right foot directly behind the left foot (about shoulder width), then cresting kick with the left leg to block the turning kick",
         ],
-        counter:
-          "Right leg middle turning kick and left L-stance backfist strike",
+        counter: "Jumping back piercing kick with the right leg",
       },
       {
         number: 7,
         attacks: [
-          "Step forward into right leg high turning kick",
-          "Step forward into left walking stance, arc-hand strike to the throat",
+          "Step forward into right walking stance, flat fingertip thrust",
+          "Twisting kick with the left leg",
         ],
         defences: [
-          "Step back into right L-stance, palm inward block",
-          "Step back into left L-stance, outer forearm block",
+          "Right walking stance, reverse knifehand block",
+          "Slide back into right rear foot stance, forearm-guarding block",
         ],
-        counter: "Jumping right knifehand strike",
+        counter:
+          "Jump into right X-stance, backfist strike to the philtrum",
       },
       {
         number: 8,
         attacks: [
-          "Move into right fixed stance, side fist strike",
-          "Step forward into left leg middle reverse turning kick",
+          "Step forward into left L-stance, middle section obverse punch",
+          "Side piercing kick with the left leg",
         ],
         defences: [
-          "Step back into right L-stance, knifehand middle block",
-          "Slide back into left L-stance, outer forearm block",
+          "Left L-stance, upward palm block",
+          "Move the right foot back into right L-stance, outer forearm low block",
         ],
-        counter: "Jumping left knifehand strike",
+        counter:
+          "Reverse hooking kick with the right leg, then jumping front snap kick with the left leg (Kihap on jumping front snap kick)",
+      },
+      {
+        number: 9,
+        attacks: [
+          "Step forward into right walking stance, twin vertical punch",
+          "Front snap kick with the left leg",
+        ],
+        defences: [
+          "Step back into left walking stance, high wedging block",
+          "Move the left foot back into left L-stance, double forearm low pushing block",
+        ],
+        counter: "High section side piercing kick with the right leg",
+      },
+      {
+        number: 10,
+        attacks: [
+          "Turning kick with the right leg",
+          "Jumping side piercing kick with the same (right) foot",
+        ],
+        defences: [
+          "Left L-stance, outer forearm inward block",
+          "Slide back into right rear foot stance, forearm-guarding block",
+        ],
+        counter: "Jumping turning kick with the right leg",
       },
     ],
   },
   {
     id: "1-step",
     name: "One Step Sparring",
-    koreanName: "Ilbo Matsogi",
     description:
       "The most spontaneous form of pre-arranged sparring. A single attack is agreed upon; the defender blocks and counters with one decisive technique. Emphasis is on timing, distance, and realistic application.",
     rank: "4th Gup (Blue Belt) and above",

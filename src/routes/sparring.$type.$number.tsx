@@ -76,8 +76,7 @@ function SparringSequenceDetail() {
         </Link>
 
         <header className="relative mb-8">
-          <p className="text-sm text-primary/80">{sparring.koreanName}</p>
-          <h1 className="mt-1 text-2xl font-semibold tracking-tight text-white tabular-nums">
+          <h1 className="text-2xl font-semibold tracking-tight text-white tabular-nums">
             Sequence {sequence.number}
           </h1>
         </header>

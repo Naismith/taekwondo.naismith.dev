@@ -32,7 +32,6 @@ function SparringSection({ sparring }: { sparring: SparringDefinition }) {
         <h2 className="text-xl font-semibold tracking-tight text-white">
           {sparring.name}
         </h2>
-        <p className="mt-1 text-sm text-primary/80">{sparring.koreanName}</p>
         <p className="mt-2 text-sm text-white/50">{sparring.description}</p>
         <p className="mt-3 text-xs text-white/40">{sparring.rank}</p>
       </header>
@@ -49,11 +48,6 @@ function SparringSection({ sparring }: { sparring: SparringDefinition }) {
             <dd className="text-white/70">{sparring.defenderStart}</dd>
           </div>
         </dl>
-        {sparring.fixedAttack && (
-          <p className="mt-4 rounded-sm bg-primary/5 px-3 py-2.5 text-sm leading-relaxed text-white/70 ring-1 ring-primary/20">
-            Attack: three middle section obverse punches in walking stance
-          </p>
-        )}
       </div>
 
       <div>
