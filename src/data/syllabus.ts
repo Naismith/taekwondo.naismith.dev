@@ -101,7 +101,7 @@ export const rankSyllabus: RankSyllabus[] = [
     rank: "4th Gup (Blue Belt)",
     shortLabel: "4th Gup",
     newPatterns: ["Joong-Gun"],
-    sparring: ["3-step", "2-step", "1-step"],
+    sparring: ["3-step", "2-step"],
     theory: [
       "meaning",
       "tenets",
@@ -114,14 +114,13 @@ export const rankSyllabus: RankSyllabus[] = [
       "glossary",
       "techniques",
     ],
-    notes: "One-step sparring introduced.",
   },
   {
     gup: 3,
     rank: "3rd Gup (Red Stripe)",
     shortLabel: "3rd Gup",
     newPatterns: ["Toi-Gye"],
-    sparring: ["3-step", "2-step", "1-step"],
+    sparring: ["3-step", "2-step"],
     theory: [
       "meaning",
       "tenets",
@@ -140,7 +139,7 @@ export const rankSyllabus: RankSyllabus[] = [
     rank: "2nd Gup (Red Belt)",
     shortLabel: "2nd Gup",
     newPatterns: ["Hwa-Rang"],
-    sparring: ["3-step", "2-step", "1-step"],
+    sparring: ["3-step", "2-step"],
     theory: [
       "meaning",
       "tenets",
@@ -159,7 +158,7 @@ export const rankSyllabus: RankSyllabus[] = [
     rank: "1st Gup (Black Stripe)",
     shortLabel: "1st Gup",
     newPatterns: ["Choong-Moo"],
-    sparring: ["3-step", "2-step", "1-step"],
+    sparring: ["3-step", "2-step"],
     theory: [
       "meaning",
       "tenets",
@@ -179,7 +178,7 @@ export const rankSyllabus: RankSyllabus[] = [
     rank: "1st Degree Black Belt",
     shortLabel: "1st Dan",
     newPatterns: ["Kwang-Gae", "Po-Eun", "Ge-Baek"],
-    sparring: ["3-step", "2-step", "1-step"],
+    sparring: ["3-step", "2-step"],
     theory: [
       "meaning",
       "tenets",
@@ -211,7 +210,6 @@ const theoryLabels: Record<string, string> = {
 const sparringLabels: Record<SparringType, string> = {
   "3-step": "Three-step sparring",
   "2-step": "Two-step sparring",
-  "1-step": "One-step sparring",
 };
 
 export function getRankSyllabus(gup: number | "black"): RankSyllabus | undefined {
