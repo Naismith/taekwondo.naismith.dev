@@ -389,6 +389,52 @@ export const glossary: GlossaryEntry[] = [
     definition: "Formal bow showing respect — typically 15° from attention stance.",
   },
   {
+    english: "Bow to the instructor",
+    korean: "Sabum Nim Ke Kyong Ye",
+    category: "general",
+    definition:
+      "Command to face the instructor and bow. Say “Taekwon” when bowing to a person.",
+    aliases: ["Sabum Nim Kke Kyong Ye"],
+  },
+  {
+    english: "Bow to the assistant instructor",
+    korean: "Bo Sabum Nim Ke Kyong Ye",
+    category: "general",
+    definition: "Command to face the assistant instructor and bow.",
+  },
+  {
+    english: "Bow to the senior",
+    korean: "Sunbae Nim Ke Kyong Ye",
+    category: "general",
+    definition:
+      "Command to face the senior student and bow — common at the end of class.",
+  },
+  {
+    english: "Bow to the master",
+    korean: "Sahyun Nim Ke Kyong Ye",
+    category: "general",
+    definition: "Command to face the master (typically 7th–8th degree) and bow.",
+  },
+  {
+    english: "Bow to the grand master",
+    korean: "Sasung Nim Ke Kyong Ye",
+    category: "general",
+    definition: "Command to face the grand master (9th degree) and bow.",
+  },
+  {
+    english: "Salutation when bowing",
+    korean: "Taekwon",
+    category: "general",
+    definition:
+      "Word spoken when bowing to a living person — not used for flags or photographs.",
+  },
+  {
+    english: "Dismiss",
+    korean: "Hae San",
+    category: "general",
+    definition: "Command to dismiss the class at the end of training.",
+  },
+  {
     english: "Ready",
     korean: "Junbi",
     category: "general",

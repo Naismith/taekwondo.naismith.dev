@@ -88,6 +88,94 @@ export const koreanCounting: TheorySection = {
   ],
 };
 
+export const classTerms: TheorySection = {
+  id: "class-terms",
+  title: "Class Commands",
+  description:
+    "Korean commands used in every training session — from lining up at the start of class to beginning and finishing patterns.",
+  items: [
+    {
+      label: "Attention",
+      korean: "Charyot",
+      detail: "Stand at attention in moa sogi (feet together, arms at sides).",
+    },
+    {
+      label: "Bow",
+      korean: "Kyong Ye",
+      detail:
+        "Formal bow from attention — typically 15°. Also the final word in directed bow commands.",
+    },
+    {
+      label: "Bow to the instructor",
+      korean: "Sabum Nim Ke Kyong Ye",
+      detail:
+        "Face the instructor and bow. Ke means “to” or “toward”. Say “Taekwon” when bowing to a person.",
+    },
+    {
+      label: "Bow to the assistant instructor",
+      korean: "Bo Sabum Nim Ke Kyong Ye",
+      detail:
+        "Face the assistant instructor (bo sabum) and bow. Say “Taekwon”.",
+    },
+    {
+      label: "Bow to the senior",
+      korean: "Sunbae Nim Ke Kyong Ye",
+      detail:
+        "Face the senior student and bow. Used at the end of class and in grading ceremonies.",
+    },
+    {
+      label: "Bow to the master",
+      korean: "Sahyun Nim Ke Kyong Ye",
+      detail:
+        "Face the master (typically 7th–8th degree) and bow. Say “Taekwon”.",
+    },
+    {
+      label: "Bow to the grand master",
+      korean: "Sasung Nim Ke Kyong Ye",
+      detail:
+        "Face the grand master (9th degree) and bow. Say “Taekwon”.",
+    },
+    {
+      label: "Salutation when bowing to a person",
+      korean: "Taekwon",
+      detail:
+        "Say aloud when bowing to a living person. Do not say it when bowing to the ITF flag or General Choi’s photograph.",
+    },
+    {
+      label: "Ready",
+      korean: "Junbi",
+      detail: "Adopt a ready posture before beginning an exercise or pattern.",
+    },
+    {
+      label: "Begin",
+      korean: "Sijak",
+      detail: "Start the pattern or exercise.",
+    },
+    {
+      label: "Return",
+      korean: "Baro",
+      detail: "Return to ready posture or the starting position.",
+    },
+    {
+      label: "Stop",
+      korean: "Goman",
+      detail: "Halt the current exercise.",
+    },
+    {
+      label: "Dismiss",
+      korean: "Hae San",
+      detail:
+        "End of class — students bow out, then typically clap once before leaving the formation.",
+    },
+    {
+      label: "Shout",
+      korean: "Kihap",
+      detail:
+        "Spirit cry — a sharp, controlled shout at the moment of impact.",
+    },
+  ],
+};
+
 export const beltColours = [
   {
     rank: "10th Gup (White Belt)",

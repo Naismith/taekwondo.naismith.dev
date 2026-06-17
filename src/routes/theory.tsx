@@ -8,6 +8,7 @@ import {
 } from "~/data/techniques";
 import {
   beltColours,
+  classTerms,
   compositionOfTaekwondo,
   koreanCounting,
   sineWavePrinciple,
@@ -28,6 +29,7 @@ const sectionNav = [
   { id: "tenets", label: "Tenets" },
   { id: "oath", label: "Oath" },
   { id: "counting", label: "Counting" },
+  { id: "class-terms", label: "Commands" },
   { id: "colours", label: "Belts" },
   { id: "composition", label: "Composition" },
   { id: "theory-of-power", label: "Power" },
@@ -109,7 +111,7 @@ function TechniquesSection() {
       <div className="flex flex-col gap-6">
         {techniqueCategories.map((group) => {
           const items = techniques.filter(
-            (technique) => technique.category === group.id
+            (technique) => technique.category === group.id,
           );
           return (
             <div key={group.id}>
@@ -202,6 +204,7 @@ function Theory() {
           </section>
 
           <TheoryList section={koreanCounting} />
+          <TheoryList section={classTerms} />
 
           <section id="colours">
             <SectionHeading>Belt Colour Meanings</SectionHeading>

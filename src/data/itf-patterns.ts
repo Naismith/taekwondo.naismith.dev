@@ -12,7 +12,7 @@ export function patternToId(name: string): string {
 export const itfFundamentals: ItfPattern[] = [
   {
     name: "Saju Jirugi",
-    movements: 16,
+    movements: 14,
     meaning: "Four directional punch",
     rank: "10th Gup (White Belt)",
   },

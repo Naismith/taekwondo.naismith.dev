@@ -44,7 +44,7 @@ export const rankSyllabus: RankSyllabus[] = [
     shortLabel: "10th Gup",
     newPatterns: ["Saju Jirugi", "Saju Makgi"],
     sparring: [],
-    theory: ["meaning", "tenets", "oath", "counting", "colours"],
+    theory: ["meaning", "tenets", "oath", "counting", "class-terms", "colours"],
     notes: "Fundamental exercises — four-directional punch and block.",
     intro:
       "The starting point of your Taekwon-Do journey. Focus on fundamentals, discipline and basics.",
@@ -225,6 +225,7 @@ const theoryLabels: Record<string, string> = {
   tenets: "Tenets",
   oath: "Student Oath",
   counting: "Counting in Korean",
+  "class-terms": "Class commands",
   colours: "Belt colour meanings",
   composition: "Composition of Taekwon-Do",
   "theory-of-power": "Theory of Power",
@@ -237,6 +238,20 @@ const sparringLabels: Record<SparringType, string> = {
   "3-step": "Three-step sparring",
   "2-step": "Two-step sparring",
 };
+
+export function beltToId(gup: number | "black"): string {
+  if (gup === "black") return "1st-dan";
+  return `${gup}-gup`;
+}
+
+export function getBeltById(id: string): RankSyllabus | undefined {
+  if (id === "1st-dan") return getRankSyllabus("black");
+
+  const match = id.match(/^(\d+)-gup$/);
+  if (!match) return undefined;
+
+  return getRankSyllabus(Number.parseInt(match[1], 10));
+}
 
 export function getRankSyllabus(gup: number | "black"): RankSyllabus | undefined {
   return rankSyllabus.find((entry) => entry.gup === gup);
@@ -292,6 +307,11 @@ const theoryRequirementMap: Record<
     label: "Korean counting",
     kind: "counting",
     link: { to: "/theory", hash: "counting" },
+  },
+  "class-terms": {
+    label: "Class commands",
+    kind: "terminology",
+    link: { to: "/theory", hash: "class-terms" },
   },
   glossary: {
     label: "Terminology",
