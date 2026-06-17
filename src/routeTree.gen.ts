@@ -13,6 +13,7 @@ import { Route as TheoryRouteImport } from './routes/theory'
 import { Route as SparringRouteImport } from './routes/sparring'
 import { Route as PatternsRouteImport } from './routes/patterns'
 import { Route as GlossaryRouteImport } from './routes/glossary'
+import { Route as BeltsRouteImport } from './routes/belts'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SparringIndexRouteImport } from './routes/sparring.index'
 import { Route as SparringTypeRouteImport } from './routes/sparring.$type'
@@ -37,6 +38,11 @@ const PatternsRoute = PatternsRouteImport.update({
 const GlossaryRoute = GlossaryRouteImport.update({
   id: '/glossary',
   path: '/glossary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BeltsRoute = BeltsRouteImport.update({
+  id: '/belts',
+  path: '/belts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -67,6 +73,7 @@ const SparringTypeNumberRoute = SparringTypeNumberRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/belts': typeof BeltsRoute
   '/glossary': typeof GlossaryRoute
   '/patterns': typeof PatternsRoute
   '/sparring': typeof SparringRouteWithChildren
@@ -78,6 +85,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/belts': typeof BeltsRoute
   '/glossary': typeof GlossaryRoute
   '/patterns': typeof PatternsRoute
   '/theory': typeof TheoryRoute
@@ -89,6 +97,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/belts': typeof BeltsRoute
   '/glossary': typeof GlossaryRoute
   '/patterns': typeof PatternsRoute
   '/sparring': typeof SparringRouteWithChildren
@@ -102,6 +111,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/belts'
     | '/glossary'
     | '/patterns'
     | '/sparring'
@@ -113,6 +123,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/belts'
     | '/glossary'
     | '/patterns'
     | '/theory'
@@ -123,6 +134,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/belts'
     | '/glossary'
     | '/patterns'
     | '/sparring'
@@ -135,6 +147,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BeltsRoute: typeof BeltsRoute
   GlossaryRoute: typeof GlossaryRoute
   PatternsRoute: typeof PatternsRoute
   SparringRoute: typeof SparringRouteWithChildren
@@ -170,6 +183,13 @@ declare module '@tanstack/react-router' {
       path: '/glossary'
       fullPath: '/glossary'
       preLoaderRoute: typeof GlossaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/belts': {
+      id: '/belts'
+      path: '/belts'
+      fullPath: '/belts'
+      preLoaderRoute: typeof BeltsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -238,6 +258,7 @@ const SparringRouteWithChildren = SparringRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BeltsRoute: BeltsRoute,
   GlossaryRoute: GlossaryRoute,
   PatternsRoute: PatternsRoute,
   SparringRoute: SparringRouteWithChildren,

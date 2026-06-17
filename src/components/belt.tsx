@@ -30,7 +30,7 @@ const gupBeltByNumber: Record<number, BeltStyle> = {
 
 export const colouredBeltLadder: BeltStyle[] = [
   ...([10, 9, 8, 7, 6, 5, 4, 3, 2, 1] as const).map((gup) => gupBeltByNumber[gup]),
-  { color: beltColors.black },
+  { color: beltColors.black, dan: 1 },
 ];
 
 export function rankToBeltStyle(rank: string): BeltStyle {

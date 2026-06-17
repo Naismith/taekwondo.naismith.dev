@@ -42,6 +42,10 @@
   @apply mx-auto max-w-2xl;
 }
 
+@utility content-column-wide {
+  @apply mx-auto max-w-5xl;
+}
+
 @utility ambient-glow {
   @apply pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_50%_0%,rgba(30,58,95,0.4)_0%,transparent_70%)];
 }

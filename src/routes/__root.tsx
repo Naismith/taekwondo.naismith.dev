@@ -25,6 +25,12 @@ function RootLayout() {
           Home
         </Link>
         <Link
+          to="/belts"
+          className="text-sm text-white transition-colors hover:text-primary [&.active]:text-primary"
+        >
+          Belts
+        </Link>
+        <Link
           to="/patterns"
           className="text-sm text-white transition-colors hover:text-primary [&.active]:text-primary"
         >
