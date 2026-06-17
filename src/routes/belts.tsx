@@ -1,6 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { Check, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { Check, ChevronDown, ChevronRight } from "lucide-react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import { MiniBelt, colouredBeltLadder } from "~/components/belt";
 import {
@@ -15,6 +15,30 @@ import { cn } from "~/utils";
 export const Route = createFileRoute("/belts")({
   component: Belts,
 });
+
+const SELECTED_BELT_STORAGE_KEY = "belts.selectedIndex";
+
+function getStoredBeltIndex(): number {
+  if (typeof window === "undefined") return 0;
+
+  try {
+    const raw = localStorage.getItem(SELECTED_BELT_STORAGE_KEY);
+    if (raw === null) return 0;
+
+    const index = Number.parseInt(raw, 10);
+    if (
+      Number.isNaN(index) ||
+      index < 0 ||
+      index >= colouredBeltLadder.length
+    ) {
+      return 0;
+    }
+
+    return index;
+  } catch {
+    return 0;
+  }
+}
 
 function KickSilhouette() {
   return (
@@ -38,6 +62,191 @@ function CheckIcon() {
     <span className="flex size-6 items-center justify-center rounded-full bg-primary/20 ring-1 ring-primary/40">
       <Check aria-hidden className="size-3.5 text-primary" strokeWidth={2} />
     </span>
+  );
+}
+
+const rankOptionClassName = cn(
+  "flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left transition-colors",
+  "bg-white/3 ring-1 ring-white/10 hover:bg-white/6"
+);
+
+function RankOptionButton({
+  style,
+  label,
+  isSelected,
+  onSelect,
+  className,
+}: {
+  style: (typeof colouredBeltLadder)[number];
+  label: string;
+  isSelected: boolean;
+  onSelect: () => void;
+  className?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      aria-pressed={isSelected}
+      className={cn(
+        rankOptionClassName,
+        isSelected && "bg-primary/5 ring-primary/40",
+        className
+      )}
+    >
+      <MiniBelt {...style} className="h-2.5 w-12" />
+      <span className="min-w-0 flex-1 text-sm text-white/80">{label}</span>
+      {isSelected ? (
+        <CheckIcon />
+      ) : (
+        <ChevronRight
+          aria-hidden
+          className="size-4 text-white/30"
+          strokeWidth={1.5}
+        />
+      )}
+    </button>
+  );
+}
+
+function RankGrid({
+  selectedIndex,
+  onSelect,
+}: {
+  selectedIndex: number;
+  onSelect: (index: number) => void;
+}) {
+  return (
+    <div className="mt-3 hidden grid-cols-2 gap-2 lg:grid">
+      {colouredBeltLadder.map((style, index) => {
+        const syllabus = getSyllabusForBeltIndex(index);
+        const isBlackBelt = index === colouredBeltLadder.length - 1;
+
+        if (!syllabus) return null;
+
+        return (
+          <RankOptionButton
+            key={index}
+            style={style}
+            label={syllabus.rank}
+            isSelected={selectedIndex === index}
+            onSelect={() => onSelect(index)}
+            className={isBlackBelt ? "col-span-2" : undefined}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+function RankDropdown({
+  selectedIndex,
+  onSelect,
+}: {
+  selectedIndex: number;
+  onSelect: (index: number) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const menuId = useId();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const selectedStyle = colouredBeltLadder[selectedIndex];
+  const selectedSyllabus = getSyllabusForBeltIndex(selectedIndex);
+
+  useEffect(() => {
+    if (!open) return;
+
+    function handlePointerDown(event: MouseEvent | TouchEvent) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
+      }
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("touchstart", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("touchstart", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open]);
+
+  if (!selectedSyllabus) return null;
+
+  return (
+    <div ref={containerRef} className="relative mt-3 lg:hidden">
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-haspopup="listbox"
+        aria-controls={menuId}
+        onClick={() => setOpen((value) => !value)}
+        className={cn(
+          rankOptionClassName,
+          "bg-white/5 hover:ring-white/15",
+          open && "bg-white/10 ring-white/15"
+        )}
+      >
+        <MiniBelt {...selectedStyle} className="h-2.5 w-12" />
+        <span className="min-w-0 flex-1 text-sm font-medium text-white">
+          {selectedSyllabus.rank}
+        </span>
+        <ChevronDown
+          aria-hidden
+          className={cn(
+            "size-5 shrink-0 text-white/50 transition-transform",
+            open && "rotate-180"
+          )}
+          strokeWidth={1.75}
+        />
+      </button>
+
+      {open && (
+        <ul
+          id={menuId}
+          role="listbox"
+          aria-label="Belt ranks"
+          className={cn(
+            "absolute inset-x-0 top-full z-20 mt-2 flex max-h-[min(24rem,calc(100dvh-12rem))] flex-col gap-2 overflow-y-auto p-2 scrollbar-subtle",
+            "rounded-sm bg-black ring-1 ring-white/10 backdrop-blur-sm"
+          )}
+        >
+          {colouredBeltLadder.map((style, index) => {
+            const syllabus = getSyllabusForBeltIndex(index);
+
+            if (!syllabus) return null;
+
+            return (
+              <li
+                key={index}
+                role="option"
+                aria-selected={selectedIndex === index}
+              >
+                <RankOptionButton
+                  style={style}
+                  label={syllabus.rank}
+                  isSelected={selectedIndex === index}
+                  onSelect={() => {
+                    onSelect(index);
+                    setOpen(false);
+                  }}
+                />
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
   );
 }
 
@@ -206,8 +415,16 @@ function RankDetails({ syllabus }: { syllabus: RankSyllabus }) {
 }
 
 function Belts() {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(getStoredBeltIndex);
   const selectedSyllabus = getSyllabusForBeltIndex(selectedIndex);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(SELECTED_BELT_STORAGE_KEY, String(selectedIndex));
+    } catch {
+      // Ignore quota or private-mode errors.
+    }
+  }, [selectedIndex]);
 
   return (
     <div className="page-shell">
@@ -234,44 +451,11 @@ function Belts() {
               <p className="text-xs font-medium uppercase tracking-wide text-primary">
                 Select a rank
               </p>
-              <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
-                {colouredBeltLadder.map((style, index) => {
-                  const syllabus = getSyllabusForBeltIndex(index);
-                  const isSelected = selectedIndex === index;
-                  const isBlackBelt = index === colouredBeltLadder.length - 1;
-
-                  if (!syllabus) return null;
-
-                  return (
-                    <button
-                      key={index}
-                      type="button"
-                      onClick={() => setSelectedIndex(index)}
-                      aria-pressed={isSelected}
-                      className={cn(
-                        "flex items-center gap-3 rounded-lg px-3 py-3 text-left transition-colors",
-                        "bg-white/3 ring-1 ring-white/10 hover:bg-white/6",
-                        isSelected && "bg-primary/5 ring-primary/40",
-                        isBlackBelt && "sm:col-span-2"
-                      )}
-                    >
-                      <MiniBelt {...style} className="h-2.5 w-12" />
-                      <span className="min-w-0 flex-1 text-sm text-white/80">
-                        {syllabus.rank}
-                      </span>
-                      {isSelected ? (
-                        <CheckIcon />
-                      ) : (
-                        <ChevronRight
-                          aria-hidden
-                          className="size-4 text-white/30"
-                          strokeWidth={1.5}
-                        />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
+              <RankDropdown
+                selectedIndex={selectedIndex}
+                onSelect={setSelectedIndex}
+              />
+              <RankGrid selectedIndex={selectedIndex} onSelect={setSelectedIndex} />
             </div>
 
             {selectedSyllabus && <RankDetails syllabus={selectedSyllabus} />}

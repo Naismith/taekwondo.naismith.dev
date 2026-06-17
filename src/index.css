@@ -53,3 +53,25 @@
 @utility accent-glow {
   @apply pointer-events-none absolute inset-x-0 top-0 h-48 bg-[radial-gradient(ellipse_at_80%_20%,rgba(192,132,252,0.08)_0%,transparent_50%)];
 }
+
+@utility scrollbar-subtle {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background-color: rgba(255, 255, 255, 0.14);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(192, 132, 252, 0.45);
+  }
+}
