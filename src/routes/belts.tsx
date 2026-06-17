@@ -1,4 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { Check, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 import { MiniBelt, colouredBeltLadder } from "~/components/belt";
@@ -32,34 +33,10 @@ function KickSilhouette() {
   );
 }
 
-function ChevronRightIcon() {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 16 16"
-      className="size-4 text-white/30"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    >
-      <path d="M6 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 function CheckIcon() {
   return (
     <span className="flex size-6 items-center justify-center rounded-full bg-primary/20 ring-1 ring-primary/40">
-      <svg
-        aria-hidden
-        viewBox="0 0 16 16"
-        className="size-3.5 text-primary"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-      >
-        <path d="M4 8l3 3 5-6" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
+      <Check aria-hidden className="size-3.5 text-primary" strokeWidth={2} />
     </span>
   );
 }
@@ -282,7 +259,15 @@ function Belts() {
                       <span className="min-w-0 flex-1 text-sm text-white/80">
                         {syllabus.rank}
                       </span>
-                      {isSelected ? <CheckIcon /> : <ChevronRightIcon />}
+                      {isSelected ? (
+                        <CheckIcon />
+                      ) : (
+                        <ChevronRight
+                          aria-hidden
+                          className="size-4 text-white/30"
+                          strokeWidth={1.5}
+                        />
+                      )}
                     </button>
                   );
                 })}

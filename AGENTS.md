@@ -37,10 +37,10 @@ When docs disagree, follow this order:
 ## Commands
 
 ```bash
-npm run dev      # dev server + HMR
-npm run build    # production build + tsc check
-npm run lint     # ESLint
-npm run preview  # serve dist/
+yarn dev      # dev server + HMR
+yarn build    # production build + tsc check
+yarn lint     # ESLint
+yarn preview  # serve dist/
 ```
 
 ## Project layout
