@@ -445,8 +445,8 @@ function Belts() {
           <KickSilhouette />
         </header>
 
-        <div className="relative rounded-xl bg-white/2 p-5 ring-1 ring-white/10 sm:p-6">
-          <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
+        <div className="relative rounded-xl bg-white/2 p-4 ring-1 ring-white/10">
+          <div className="grid gap-6 lg:grid-cols-[55fr_45fr] lg:gap-6">
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-primary">
                 Select a rank

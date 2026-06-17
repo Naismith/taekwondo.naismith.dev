@@ -58,7 +58,7 @@ function Glossary() {
 
   return (
     <div className="page-shell">
-      <div className="content-column relative">
+      <div className="content-column-wide relative">
         <div aria-hidden className="ambient-glow" />
         <div aria-hidden className="accent-glow" />
 
