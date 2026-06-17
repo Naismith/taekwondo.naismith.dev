@@ -88,7 +88,7 @@ spacing:
   card-padding-sm: 12px
   list-gap: 8px
   section-gap: 32px
-  content-max-width: 672px
+  content-max-width: 1024px
 components:
   nav-bar:
     backgroundColor: "rgba(0, 0, 0, 0.80)"
@@ -106,6 +106,8 @@ components:
     backgroundColor: "{colors.background}"
     padding: "{spacing.nav-offset} {spacing.page-padding-x} {spacing.page-padding-bottom}"
   content-column:
+    width: "{spacing.content-max-width}"
+  content-column-wide:
     width: "{spacing.content-max-width}"
   section-heading:
     textColor: "rgba(255, 255, 255, 0.80)"
@@ -153,7 +155,7 @@ This file follows the [Google Labs DESIGN.md spec](https://github.com/google-lab
 
 ### Implementation
 
-In this codebase, tokens map to Tailwind via `@theme` in `src/index.css`. Use utility classes in JSX and `cn()` from `~/utils` for composition. Shared layout helpers: `@utility page-shell`, `@utility content-column`, `@utility ambient-glow`, `@utility accent-glow`. Inter is loaded in `index.html`.
+In this codebase, tokens map to Tailwind via `@theme` in `src/index.css`. Use utility classes in JSX and `cn()` from `~/utils` for composition. Shared layout helpers: `@utility page-shell`, `@utility content-column-wide`, `@utility ambient-glow`, `@utility accent-glow`. Inter is loaded in `index.html`.
 
 | Token source                                 | Implementation                                                 |
 | -------------------------------------------- | -------------------------------------------------------------- |
@@ -162,7 +164,7 @@ In this codebase, tokens map to Tailwind via `@theme` in `src/index.css`. Use ut
 | `colors.on-surface*`                         | `text-white/70`, `text-white/50`, etc.                         |
 | `typography.*`                               | Tailwind size/weight/tracking utilities per Components section |
 | `rounded.*`                                  | `@theme` radius tokens → `rounded-sm`, `rounded-md`            |
-| `spacing.*`                                  | Tailwind spacing scale (`px-4`, `gap-2`, `max-w-2xl`, etc.)    |
+| `spacing.*`                                  | Tailwind spacing scale (`px-4`, `gap-2`, `max-w-5xl`, etc.)    |
 
 Add new **wired** tokens to `@theme` when they will be reused; one-off opacity variants can stay as inline utilities if they match existing on-surface hierarchy.
 
@@ -239,13 +241,13 @@ Reserve gradients for hero moments and the 3D viewer backdrop:
 
 ## Layout
 
-Linear-style **single-column content shell** with restrained max-width.
+Linear-style **centered content shell** with a wide max-width for reference pages.
 
-- **Content column:** `max-w-2xl` (672px) centered. Reading and reference content stays narrow and scannable.
+- **Content column:** `content-column-wide` — `max-w-5xl` (1024px) centered. Used on all route pages.
 - **Page shell:** `min-h-screen`, `pt-14` (nav offset), `px-4`, `pb-8`.
 - **Rhythm:** 4px base grid. Common gaps: `gap-1.5` (6px tight lists), `gap-2` (8px list rows), `gap-4` (16px card grids), `gap-8` (32px page sections).
 - **Density:** Restrained. One primary action per row. List rows are tappable cards, not dense tables.
-- **Navigation:** Fixed top bar, low-noise text links. No hamburger, no sidebar, no icon-only nav on desktop.
+- **Navigation:** Fixed top bar. Desktop: horizontal text links to all main sections. Mobile: section picker dropdown on non-home routes (home uses inline section cards instead). No sidebar.
 - **3D viewer:** Full-width within the content column on pattern detail — the immersive Fey moment in an otherwise Linear layout.
 
 ## Elevation & Depth
@@ -262,7 +264,7 @@ Depth is **tonal + atmospheric**, not shadow-heavy.
 ### Fey atmosphere
 
 - **Backdrop blur:** Nav bar (`bg-black/80 backdrop-blur-sm`). Extend to modals/overlays when added.
-- **Glow:** Single soft purple or navy radial behind focal content — 3D scene, progress milestone, hero belt ladder.
+- **Glow:** Single soft purple or navy radial behind focal content — 3D scene, home section cards, belt progression page.
 - **Shadows:** Avoid box shadows on cards. If needed, use `0 0 40px rgba(192, 132, 252, 0.08)` — glow, not drop shadow.
 - **Borders:** `ring-1 ring-white/10` or `ring-primary/20` for emphasis. No thick borders.
 
@@ -281,7 +283,7 @@ Corner radius is a hierarchy signal: sharper = structural/reference UI; slightly
 
 ### Navigation bar
 
-Fixed top, `bg-black/80 backdrop-blur-sm`, horizontal text links with `gap-4`. Active state: `text-primary`. Hover: `text-primary` with `transition-colors`. No icons required. No underline indicators — color shift is sufficient.
+Fixed top, `bg-black/80 backdrop-blur-sm`. **Desktop (`md+`):** horizontal text links with `gap-4` to Home, Belts, Patterns, Sparring, Theory, and Glossary. Active state: `text-primary`. Hover: `text-primary` with `transition-colors`. **Mobile:** on non-home routes, a section picker button opens a dropdown of `SectionLink` cards (icon, label, description). Home omits the mobile picker — section cards are inline on the page.
 
 ### Page header
 
@@ -316,9 +318,9 @@ For meanings, oath text, and semantic callouts: `bg-primary/5 ring-1 ring-primar
 
 `inline-flex items-center gap-1.5 text-white/50 hover:text-primary text-sm transition-colors`. Precedes detail page headers.
 
-### Belt ladder
+### Belt progression (`/belts`)
 
-Vertical progression on home. Each rank is a horizontal `Belt` bar with rank label. The ladder is the primary **progress visualization** — clean alignment first; optional subtle glow on a focal rank is permitted but not required. No gamification badges.
+Rank selector (two-column grid on desktop, dropdown on mobile) beside grading requirements for the selected rank. Rank labels use `whitespace-nowrap`. Layout splits ~55% selector / ~45% details on large screens. `MiniBelt` beside each rank option.
 
 ### 3D pattern scene
 
@@ -335,9 +337,9 @@ Immersive viewport: navy mat (`#1e3a5f`), purple path lines (`#c084fc`), corner 
 - Keep the canvas black. Depth comes from white-alpha surfaces, not gray backgrounds.
 - Use purple (`primary`) for interaction, progress, and emphasis — one accent, applied consistently.
 - Use `tabular-nums` on all numeric content (steps, ranks, move counts).
-- Maintain `max-w-2xl` content width for reference pages.
+- Maintain `content-column-wide` (`max-w-5xl`) content width on route pages.
 - Apply uppercase + tracking only to section headings, not body labels.
-- Use subtle glow and gradient on hero/immersive zones (belt ladder, 3D viewer).
+- Use subtle glow and gradient on hero/immersive zones (home section cards, 3D viewer).
 - Keep nav minimal — text links, color-only active state.
 - Preserve belt colors strictly on belt components.
 
@@ -347,7 +349,7 @@ Immersive viewport: navy mat (`#1e3a5f`), purple path lines (`#c084fc`), corner 
 - Don't add box shadows on cards — use surface layers and glow instead.
 - Don't use `rounded-lg` or `rounded-xl` on list rows and reference cards.
 - Don't mix multiple accent colors in one view (no rainbow metadata).
-- Don't add icon-heavy navigation or sidebar chrome.
+- Don't add icon-heavy sidebar chrome — mobile nav uses section cards in a dropdown, not a persistent sidebar.
 - Don't use bold headlines — semibold is the maximum weight.
 - Don't gamify with badges, streaks, or loud progress bars — progress should feel premium and calm.
 - Don't use light mode — this system is dark-only by design.

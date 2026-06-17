@@ -25,8 +25,9 @@ The application is a static, browser-rendered React app with no backend or API l
 │                     └──────────────┬───────────────┘   │
 │                                    │                    │
 │                     ┌──────────────▼───────────────┐   │
-│                     │ __root.tsx (layout + nav)    │   │
-│                     │  └─ Outlet → route pages     │   │
+│                     │ __root.tsx                   │   │
+│                     │  NavBar, AppToaster, update  │   │
+│                     │  └─ Outlet → route pages    │   │
 │                     └──────────────────────────────┘   │
 └─────────────────────────────────────────────────────────┘
 ```
@@ -41,6 +42,8 @@ The application is a static, browser-rendered React app with no backend or API l
 | Routing              | TanStack Router                                  | File-based client routing, code splitting   |
 | Styling              | Tailwind CSS v4                                  | Utility-first CSS                           |
 | Class utilities      | `clsx` + `tailwind-merge`                        | Conditional and merged class names (`cn()`) |
+| Icons                | `lucide-react`                                   | Nav and UI icons                            |
+| Toasts               | `sonner`                                         | App update notifications                    |
 | 3D                   | Three.js, React Three Fiber, `@react-three/drei` | Pattern path visualization on dojang mat    |
 
 Visual design tokens and component patterns are defined in [DESIGN.md](./DESIGN.md); `src/index.css` maps key tokens into Tailwind's `@theme`.
@@ -58,25 +61,36 @@ taekwondo.naismith.dev/
 │   ├── utils.ts            # Shared utilities (cn helper)
 │   ├── utils/
 │   │   └── pattern-path.ts # Parse step text → 3D positions
+│   ├── hooks/
+│   │   └── use-app-update-check.ts # Poll version.json; toast on new build
 │   ├── components/
+│   │   ├── app-toaster.tsx # Sonner toast host
 │   │   ├── belt.tsx        # Belt, MiniBelt, rankToBeltStyle
-│   │   └── pattern-scene.tsx # R3F dojang mat + path visualization
+│   │   ├── nav-bar.tsx     # Fixed top nav (desktop links, mobile section picker)
+│   │   ├── nav-link.tsx    # Typed TanStack Router nav link
+│   │   ├── pattern-scene.tsx # R3F dojang mat + path visualization
+│   │   └── section-link.tsx  # Home / mobile nav section card
 │   ├── data/
+│   │   ├── glossary.ts     # Korean terminology entries and search
 │   │   ├── itf-patterns.ts # Pattern list, ranks, slug helpers
+│   │   ├── nav.ts          # Nav section metadata and path helpers
 │   │   ├── pattern-steps.ts # Step-by-step movement text per pattern
 │   │   ├── sparring.ts     # 2-step and 3-step sparring definitions
+│   │   ├── syllabus.ts     # Belt ranks, grading requirements, links
+│   │   ├── techniques.ts   # Stances and ready stances (theory page)
 │   │   └── theory.ts       # Theory reference content
 │   └── routes/
-│       ├── __root.tsx      # Root layout: nav + <Outlet />
+│       ├── __root.tsx      # Root layout: NavBar + <Outlet /> + update notifier
 │       ├── index.tsx       # Home (/)
+│       ├── belts.tsx       # Belt progression (/belts)
 │       ├── patterns.tsx    # Pattern list (/patterns)
 │       ├── pattern.$id.tsx # Pattern detail (/pattern/:id)
 │       ├── sparring.tsx    # Sparring layout (/sparring)
 │       ├── sparring.index.tsx
 │       ├── sparring.$type.tsx
-│       ├── sparring.$type.index.tsx
 │       ├── sparring.$type.$number.tsx
-│       └── theory.tsx      # Theory reference (/theory)
+│       ├── theory.tsx      # Theory reference (/theory)
+│       └── glossary.tsx    # Terminology glossary (/glossary)
 ```
 
 Routes are defined as files under `src/routes/`. TanStack Router's Vite plugin scans this directory and generates `routeTree.gen.ts` at build/dev time.
@@ -109,13 +123,14 @@ Routing uses **TanStack Router** with **file-based route definitions** and **aut
 
 | Path                      | File                                    | Purpose                                      |
 | ------------------------- | --------------------------------------- | -------------------------------------------- |
-| `/`                       | `src/routes/index.tsx`                  | Belt progression ladder                      |
+| `/`                       | `src/routes/index.tsx`                  | Home — section links to main areas           |
+| `/belts`                  | `src/routes/belts.tsx`                  | Belt progression and grading requirements    |
 | `/patterns`               | `src/routes/patterns.tsx`               | Browse ITF patterns by section               |
 | `/pattern/:id`            | `src/routes/pattern.$id.tsx`            | Pattern detail, step list, 3D viewer         |
-| `/sparring`               | `src/routes/sparring.index.tsx`         | Sparring type index (via `/sparring` layout) |
-| `/sparring/:type`         | `src/routes/sparring.$type.index.tsx`   | Sequence list for a sparring type            |
+| `/sparring`               | `src/routes/sparring.index.tsx`         | All sparring types and sequence links        |
 | `/sparring/:type/:number` | `src/routes/sparring.$type.$number.tsx` | Single sparring sequence detail              |
 | `/theory`                 | `src/routes/theory.tsx`                 | Theory reference (tenets, definitions, oath) |
+| `/glossary`               | `src/routes/glossary.tsx`               | Searchable Korean terminology glossary       |
 
 All routes are children of the root route defined in `src/routes/__root.tsx`.
 
@@ -128,15 +143,17 @@ Sparring uses two layout routes that render only an `<Outlet />`:
 - **`sparring.tsx`** — parent for all `/sparring/*` routes
 - **`sparring.$type.tsx`** — parent for `/sparring/:type/*` routes
 
-Leaf routes (`sparring.index.tsx`, `sparring.$type.index.tsx`, `sparring.$type.$number.tsx`) render page content into these outlets. All other routes render directly into the root outlet.
+Leaf routes (`sparring.index.tsx`, `sparring.$type.$number.tsx`) render page content into these outlets. There is no separate sequence-list page at `/sparring/:type` — the index lists all types and links directly to individual sequences. All other routes render directly into the root outlet.
 
 ### Root layout
 
 `__root.tsx` defines the persistent shell:
 
-- A fixed top navigation bar with `<Link>` components to `/`, `/patterns`, `/sparring`, and `/theory`
+- `AppToaster` (Sonner) and `AppUpdateNotifier` (`useAppUpdateCheck` polls `/version.json` emitted at build time)
+- `NavBar` — fixed top bar with desktop text links to all main sections; on mobile (non-home routes), a section picker dropdown using `SectionLink` cards
 - An `<Outlet />` where child route components render
-- Active link styling via TanStack Router's `.active` class
+
+Nav section metadata lives in `~/data/nav.ts`. Active link styling uses TanStack Router's `.active` class on desktop `NavLink` components.
 
 ### Route generation
 
@@ -152,7 +169,11 @@ The `@tanstack/router-plugin/vite` plugin (configured in `vite.config.ts`) watch
 
 ### Home (`/`)
 
-Renders a vertical column of `Belt` components for the ITF belt colour progression, including stripe variants between ranks.
+Renders a list of `SectionLink` cards to the main content areas (belts, patterns, sparring, theory, glossary). Section metadata comes from `~/data/nav.ts`.
+
+### Belts (`/belts`)
+
+Interactive belt progression: rank selector (grid on desktop, dropdown on mobile) and grading requirements for the selected rank. Syllabus data from `~/data/syllabus.ts`. Selected rank persists in `localStorage`.
 
 ### Patterns (`/patterns`, `/pattern/:id`)
 
@@ -160,18 +181,26 @@ The patterns index lists all patterns grouped by section. The detail page loads 
 
 ### Sparring (`/sparring/*`)
 
-Three-level navigation over static sparring definitions in `~/data/sparring.ts`: type index → sequence list → individual sequence with attacks, defences, and counter.
+Two-level navigation over static sparring definitions in `~/data/sparring.ts`: the index page lists all types with starting positions and sequence links; detail pages show attacks, defences, and counter for a single sequence.
 
 ### Theory (`/theory`)
 
-Renders static theory content from `~/data/theory.ts` — tenets, student oath, and terminology definitions.
+Renders static theory content from `~/data/theory.ts` and stances from `~/data/techniques.ts` — tenets, student oath, theory of power, sine wave, and stances.
+
+### Glossary (`/glossary`)
+
+Searchable Korean terminology from `~/data/glossary.ts` with category filters.
 
 ### Shared components
 
 | Component          | File                               | Role                                                                       |
 | ------------------ | ---------------------------------- | -------------------------------------------------------------------------- |
+| `NavBar`           | `src/components/nav-bar.tsx`       | Fixed top nav; desktop links, mobile section picker                        |
+| `NavLink`          | `src/components/nav-link.tsx`      | Typed router link with active styling                                      |
+| `SectionLink`      | `src/components/section-link.tsx`  | Card link for home and mobile nav                                          |
 | `Belt`, `MiniBelt` | `src/components/belt.tsx`          | Belt colour bars; `rankToBeltStyle()` maps rank strings to colours/stripes |
 | `PatternScene`     | `src/components/pattern-scene.tsx` | React Three Fiber scene: dojang mat, corner markers, animated path         |
+| `AppToaster`       | `src/components/app-toaster.tsx`   | Sonner toast host for update notifications                                 |
 
 ### Shared utilities
 
@@ -182,7 +211,7 @@ Renders static theory content from `~/data/theory.ts` — tenets, student oath, 
 
 Styling is **Tailwind CSS v4** integrated via the `@tailwindcss/vite` plugin. Visual direction, tokens, and component patterns are defined in [DESIGN.md](./DESIGN.md).
 
-- **`src/index.css`** imports Tailwind with `@import "tailwindcss"`, defines a custom `dark` variant scoped to `[data-theme=dark]`, exposes design tokens via `@theme`, and provides shared `@utility` classes (`page-shell`, `content-column`, glow helpers).
+- **`src/index.css`** imports Tailwind with `@import "tailwindcss"`, defines a custom `dark` variant scoped to `[data-theme=dark]`, exposes design tokens via `@theme`, and provides shared `@utility` classes (`page-shell`, `content-column-wide`, glow helpers). All route pages use `content-column-wide` (`max-w-5xl`).
 - **`index.html`** sets `data-theme="dark"` on the `<html>` element and loads Inter from Google Fonts.
 - Components use Tailwind utility classes directly in JSX; there are no CSS modules or styled-components.
 
@@ -190,12 +219,12 @@ Styling is **Tailwind CSS v4** integrated via the `@tailwindcss/vite` plugin. Vi
 
 ### Scripts
 
-| Command           | Action                                                                         |
-| ----------------- | ------------------------------------------------------------------------------ |
-| `npm run dev`     | Start Vite dev server with HMR                                                 |
-| `npm run build`   | Production build via Vite, then TypeScript project references check (`tsc -b`) |
-| `npm run preview` | Serve the production build locally                                             |
-| `npm run lint`    | Run ESLint across the project                                                  |
+| Command        | Action                                                                         |
+| -------------- | ------------------------------------------------------------------------------ |
+| `yarn dev`     | Start Vite dev server with HMR                                                 |
+| `yarn build`   | Production build via Vite, then TypeScript project references check (`tsc -b`) |
+| `yarn preview` | Serve the production build locally                                             |
+| `yarn lint`    | Run ESLint across the project                                                  |
 
 ### Vite configuration
 
@@ -204,8 +233,9 @@ Styling is **Tailwind CSS v4** integrated via the `@tailwindcss/vite` plugin. Vi
 1. **`tanstackRouter`** — route file scanning and code splitting
 2. **`tailwindcss`** — Tailwind v4 processing
 3. **`react`** — React Fast Refresh and JSX transform
+4. **`versionJsonPlugin`** (local) — emits `version.json` with a build ID for update detection
 
-The `~` alias resolves to `src/` for imports (e.g. `import { cn } from "~/utils"`).
+The `~` alias resolves to `src/` for imports (e.g. `import { cn } from "~/utils"`). `__APP_BUILD_ID__` is defined at build time and compared against `/version.json` at runtime.
 
 Output goes to `dist/` (gitignored).
 
@@ -237,15 +267,15 @@ Specifically:
 - No global store (Redux, Zustand, TanStack Store, etc.)
 - No server state / data fetching (TanStack Query, SWR, etc.)
 - No route loaders or URL search params in use
-- No environment variables or external API integration
+- No environment variables or external API integration (except polling static `version.json` for update detection)
 
-Each page imports the data it needs from `src/data/` and manages UI state locally (e.g. selected pattern step on the detail page). Adding shared state or data fetching would require introducing new dependencies and likely a provider in `main.tsx`.
+Each page imports the data it needs from `src/data/` and manages UI state locally (e.g. selected pattern step on the detail page, selected belt rank on `/belts` with `localStorage` persistence). Adding shared state or data fetching would require introducing new dependencies and likely a provider in `main.tsx`.
 
 ## Deployment Model
 
 The app is a static SPA suitable for deployment to any static host (Netlify, Cloudflare Pages, S3 + CloudFront, GitHub Pages, etc.):
 
-1. Run `npm run build`
+1. Run `yarn build`
 2. Deploy the contents of `dist/`
 3. Configure the host to serve `index.html` for all routes (SPA fallback), since routing is client-side
 
