@@ -54,6 +54,21 @@
   @apply pointer-events-none absolute inset-x-0 top-0 h-48 bg-[radial-gradient(ellipse_at_80%_20%,rgba(192,132,252,0.08)_0%,transparent_50%)];
 }
 
+@utility icon-glow {
+  filter:
+    drop-shadow(0 0 4px var(--icon-glow-color, currentColor))
+    drop-shadow(0 0 12px var(--icon-glow-color, currentColor))
+    drop-shadow(0 0 30px var(--icon-glow-color, currentColor));
+}
+
+@utility icon-glow-* {
+  --icon-glow-color: --value(--color-*);
+  filter:
+    drop-shadow(0 0 4px var(--icon-glow-color))
+    drop-shadow(0 0 12px var(--icon-glow-color))
+    drop-shadow(0 0 30px var(--icon-glow-color));
+}
+
 @utility scrollbar-subtle {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.18) transparent;

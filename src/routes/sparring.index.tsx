@@ -1,4 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { HelmetIcon } from "~/components/icons/HelmetIcon";
 
 import {
   getSequenceSummary,
@@ -63,7 +64,7 @@ function SparringSection({ sparring }: { sparring: SparringDefinition }) {
                 }}
                 className={cn(
                   "flex w-full items-center gap-3 rounded-sm bg-white/5 px-4 py-3",
-                  "transition-colors hover:bg-white/10"
+                  "transition-colors hover:bg-white/10",
                 )}
               >
                 <span className="w-6 shrink-0 text-center text-sm tabular-nums text-primary/60">
@@ -92,23 +93,26 @@ function SparringSection({ sparring }: { sparring: SparringDefinition }) {
 function Sparring() {
   return (
     <div className="page-shell">
-      <div className="content-column-wide relative">
+      <div className="content-column-wide relative flex flex-col gap-8 py-8">
         <div aria-hidden className="ambient-glow" />
         <div aria-hidden className="accent-glow" />
 
-        <header className="relative mb-8">
-          <h1 className="text-2xl font-semibold tracking-tight text-white">
-            Pre-arranged Sparring
-          </h1>
-          <p className="mt-1 text-sm text-white/50">
-            Yaksok Matsogi — fixed attack and defence sequences used to develop
-            distance, timing, blocking, and counter-attacking.
-          </p>
+        <header className="relative flex items-start justify-between gap-6">
+          <div>
+            <h1 className="text-2xl font-semibold tracking-tight text-white">
+              Pre-arranged Sparring
+            </h1>
+            <p className="mt-1 max-w-xl text-sm text-white/50">
+              Yaksok Matsogi — fixed attack and defence sequences used to
+              develop distance, timing, blocking, and counter-attacking.
+            </p>
+          </div>
+          <HelmetIcon className="size-40 shrink-0 text-primary/20 icon-glow-primary" />
         </header>
 
         <nav
           aria-label="Sparring sections"
-          className="relative mb-8 flex flex-wrap gap-2"
+          className="relative flex flex-wrap gap-2"
         >
           {sectionNav.map(({ id, label }) => (
             <a
