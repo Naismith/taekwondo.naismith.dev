@@ -36,7 +36,7 @@ function BeltDetail() {
         </Link>
 
         <header className="relative flex flex-wrap items-center gap-4">
-          <MiniBelt {...beltStyle} className="h-3 w-16" />
+          <MiniBelt {...beltStyle} className="h-4 w-20" />
           <div>
             <h1 className="text-2xl font-semibold tracking-tight text-white">
               {syllabus.rank}
