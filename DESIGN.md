@@ -81,9 +81,12 @@ spacing:
   lg: 24px
   xl: 32px
   page-padding-x: 16px
+  page-padding-top-mobile: 32px
   page-padding-bottom: 32px
+  page-padding-bottom-mobile: 112px
   nav-padding: 16px
   nav-offset: 56px
+  mobile-nav-offset: 88px
   card-padding: 16px
   card-padding-sm: 12px
   list-gap: 8px
@@ -95,6 +98,8 @@ components:
     textColor: "{colors.on-background}"
     padding: "{spacing.nav-padding}"
     height: "{spacing.nav-offset}"
+    desktopPosition: "top"
+    mobilePosition: "bottom"
   nav-link:
     textColor: "{colors.on-background}"
     typography: "{typography.body-md}"
@@ -104,7 +109,8 @@ components:
     textColor: "{colors.primary}"
   page-shell:
     backgroundColor: "{colors.background}"
-    padding: "{spacing.nav-offset} {spacing.page-padding-x} {spacing.page-padding-bottom}"
+    paddingDesktop: "{spacing.nav-offset} {spacing.page-padding-x} {spacing.page-padding-bottom}"
+    paddingMobile: "{spacing.page-padding-top-mobile} {spacing.page-padding-x} {spacing.page-padding-bottom-mobile}"
   content-column:
     width: "{spacing.content-max-width}"
   content-column-wide:
@@ -244,10 +250,10 @@ Reserve gradients for hero moments and the 3D viewer backdrop:
 Linear-style **centered content shell** with a wide max-width for reference pages.
 
 - **Content column:** `content-column-wide` — `max-w-5xl` (1024px) centered. Used on all route pages.
-- **Page shell:** `min-h-screen`, `pt-14` (nav offset), `px-4`, `pb-8`.
+- **Page shell:** `min-h-screen`, `px-4`, `pt-8`, and bottom padding for the mobile tab bar. At `md+`, use `pt-14` (desktop nav offset) and `pb-8`.
 - **Rhythm:** 4px base grid. Common gaps: `gap-1.5` (6px tight lists), `gap-2` (8px list rows), `gap-4` (16px card grids), `gap-8` (32px page sections).
 - **Density:** Restrained. One primary action per row. List rows are tappable cards, not dense tables.
-- **Navigation:** Fixed top bar. Desktop: horizontal text links to all main sections. Mobile: section picker dropdown on non-home routes (home uses inline section cards instead). No sidebar.
+- **Navigation:** Desktop uses a fixed top bar with horizontal text links. Mobile uses a fixed bottom tab bar with icons and labels for the main sections, including Home. No sidebar.
 - **3D viewer:** Full-width within the content column on pattern detail — the immersive Fey moment in an otherwise Linear layout.
 
 ## Elevation & Depth
@@ -283,7 +289,7 @@ Corner radius is a hierarchy signal: sharper = structural/reference UI; slightly
 
 ### Navigation bar
 
-Fixed top, `bg-black/80 backdrop-blur-sm`. **Desktop (`md+`):** horizontal text links with `gap-4` to Home, Belts, Patterns, Sparring, Theory, and Glossary. Active state: `text-primary`. Hover: `text-primary` with `transition-colors`. **Mobile:** on non-home routes, a section picker button opens a dropdown of `SectionLink` cards (icon, label, description). Home omits the mobile picker — section cards are inline on the page.
+Fixed navigation that changes placement by breakpoint. **Desktop (`md+`):** top bar with `bg-black/80 backdrop-blur-sm` and horizontal text links with `gap-4` to Home, Belts, Patterns, Sparring, Theory, and Glossary. Active state: `text-primary`. Hover: `text-primary` with `transition-colors`. **Mobile:** bottom app-style tab bar, `bg-black/90 backdrop-blur-sm`, `ring-1 ring-white/10`, six equal tabs with section icons and compact labels. Active tab uses `bg-primary/10`, `text-primary`, and `ring-primary/20`. Account for `env(safe-area-inset-bottom)` and add enough page bottom padding so content never sits behind the bar.
 
 ### Page header
 
@@ -340,7 +346,7 @@ Immersive viewport: navy mat (`#1e3a5f`), purple path lines (`#c084fc`), corner 
 - Maintain `content-column-wide` (`max-w-5xl`) content width on route pages.
 - Apply uppercase + tracking only to section headings, not body labels.
 - Use subtle glow and gradient on hero/immersive zones (home section cards, 3D viewer).
-- Keep nav minimal — text links, color-only active state.
+- Keep nav minimal — desktop text links, mobile compact icon tabs, restrained active state.
 - Preserve belt colors strictly on belt components.
 
 ### Don't
@@ -349,7 +355,7 @@ Immersive viewport: navy mat (`#1e3a5f`), purple path lines (`#c084fc`), corner 
 - Don't add box shadows on cards — use surface layers and glow instead.
 - Don't use `rounded-lg` or `rounded-xl` on list rows and reference cards.
 - Don't mix multiple accent colors in one view (no rainbow metadata).
-- Don't add icon-heavy sidebar chrome — mobile nav uses section cards in a dropdown, not a persistent sidebar.
+- Don't add sidebar chrome — mobile navigation is the persistent bottom tab bar.
 - Don't use bold headlines — semibold is the maximum weight.
 - Don't gamify with badges, streaks, or loud progress bars — progress should feel premium and calm.
 - Don't use light mode — this system is dark-only by design.

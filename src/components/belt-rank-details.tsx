@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import {
   getGradingRequirements,
   getRankBadge,
+  rankSyllabus,
   type GradingRequirement,
   type RankSyllabus,
 } from "~/data/syllabus";
@@ -168,9 +169,21 @@ function RequirementRow({ requirement }: { requirement: GradingRequirement }) {
   );
 }
 
+function getRankDisplayName(rank: string) {
+  return rank.match(/\(([^)]+)\)/)?.[1] ?? rank;
+}
+
+function getRequirementTarget(syllabus: RankSyllabus) {
+  const rankIndex = rankSyllabus.findIndex((entry) => entry.gup === syllabus.gup);
+  const nextRank = rankSyllabus[rankIndex + 1];
+
+  return getRankDisplayName(nextRank?.rank ?? syllabus.rank);
+}
+
 export function BeltRankDetails({ syllabus }: { syllabus: RankSyllabus }) {
   const requirements = getGradingRequirements(syllabus);
   const badge = getRankBadge(syllabus.gup);
+  const requirementTarget = getRequirementTarget(syllabus);
   const intro = syllabus.intro ?? syllabus.notes;
   const about =
     syllabus.about ??
@@ -194,7 +207,7 @@ export function BeltRankDetails({ syllabus }: { syllabus: RankSyllabus }) {
 
       <div>
         <h3 className="mb-3 text-xs font-medium uppercase tracking-wide text-white/60">
-          Grading requirements
+          Requirements for {requirementTarget}
         </h3>
         <ul className="flex flex-col gap-2">
           {requirements.map((requirement) => (
