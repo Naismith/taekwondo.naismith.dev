@@ -2,7 +2,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 
 import { MiniBelt, colouredBeltLadder } from "~/components/belt";
-import { beltToId, getSyllabusForBeltIndex } from "~/data/syllabus";
+import { beltToId, getSyllabusForBeltIndex, rankSyllabus } from "~/data/syllabus";
 import { cn } from "~/utils";
 
 export const Route = createFileRoute("/belts")({
@@ -82,6 +82,60 @@ function RankGrid() {
   );
 }
 
+function getBeltName(rank: string) {
+  return rank.match(/\(([^)]+)\)/)?.[1] ?? rank;
+}
+
+function ProgressionList() {
+  const progression = rankSyllabus.slice(0, -1).map((rank, index) => ({
+    from: rank,
+    fromStyle: colouredBeltLadder[index],
+    to: rankSyllabus[index + 1],
+    toStyle: colouredBeltLadder[index + 1],
+  }));
+
+  return (
+    <div className="relative rounded-xl bg-white/2 p-4 ring-1 ring-white/10">
+      <div>
+        <p className="text-xs font-medium uppercase tracking-wide text-primary">
+          Progression path
+        </p>
+        <p className="mt-1 max-w-2xl text-sm text-white/50">
+          Each successful grading moves you one step forward through the coloured
+          belt ladder.
+        </p>
+      </div>
+
+      <ol className="mt-4 grid grid-cols-1 gap-2 md:grid-cols-2">
+        {progression.map(({ from, fromStyle, to, toStyle }) => (
+          <li
+            key={`${from.gup}-${to.gup}`}
+            className="flex items-center gap-3 rounded-lg bg-white/3 px-3 py-2.5 ring-1 ring-white/10"
+          >
+            <div className="flex min-w-0 flex-1 items-center gap-2">
+              <MiniBelt {...fromStyle} className="h-2.5 w-12" />
+              <span className="truncate text-sm text-white/80">
+                {getBeltName(from.rank)}
+              </span>
+            </div>
+            <ChevronRight
+              aria-hidden
+              className="size-4 shrink-0 text-primary/60"
+              strokeWidth={1.5}
+            />
+            <div className="flex min-w-0 flex-1 items-center gap-2">
+              <MiniBelt {...toStyle} className="h-2.5 w-12" />
+              <span className="truncate text-sm text-white/80">
+                {getBeltName(to.rank)}
+              </span>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 function Belts() {
   return (
     <div className="page-shell">
@@ -108,6 +162,8 @@ function Belts() {
           </p>
           <RankGrid />
         </div>
+
+        <ProgressionList />
       </div>
     </div>
   );
